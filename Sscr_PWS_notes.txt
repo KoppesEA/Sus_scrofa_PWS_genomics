@@ -1,0 +1,10 @@
+
+## Use Ensembl v104 to match VEP104 in 2023 variant calling
+nohup wget -O Sus_scrofa.Sscrofa11.1.104.gtf.gz https://ftp.ensembl.org/pub/release-104/gtf/sus_scrofa/Sus_scrofa.Sscrofa11.1.104.gtf.gz &
+nohup wget -O Sus_scrofa.Sscrofa11.1.dna.toplevel.fa.gz https://ftp.ensembl.org/pub/release-104/fasta/sus_scrofa/dna/Sus_scrofa.Sscrofa11.1.dna.toplevel.fa.gz &
+nohup wget -O Sus_scrofa.Sscrofa11.1.104.gff3.gz https://ftp.ensembl.org/pub/release-104/gff3/sus_scrofa/Sus_scrofa.Sscrofa11.1.104.gff3.gz &
+
+module load snpeff/4.3t
+java -jar snpEff.jar databases ##didn't work, need to be in snpEff directory
+
+
