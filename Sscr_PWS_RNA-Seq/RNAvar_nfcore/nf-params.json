@@ -7,7 +7,8 @@
   "read_length": 75,
   "known_indels": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz",
   "known_indels_tbi": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz.tbi",
-  "skip_variantannotation": true,
+  "annotate_tools": "vep",  
+  "vep_cache": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/",
   "input": "/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/samplesheet.csv",
   "outdir": "/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/",
   "email": "eak37@pitt.edu"

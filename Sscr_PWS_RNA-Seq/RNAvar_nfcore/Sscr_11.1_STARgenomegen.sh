@@ -11,8 +11,8 @@ module load star/2.7.9a
 
 WKDIR=/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104
 STARDIR=$WKDIR/Sscr11.1v104_STAR
-FASTA=$WKDIR/Sus_scrofa.Sscrofa11.1.dna.toplevel.fa.gz
-GTF=$WKDIR/Sus_scrofa.Sscrofa11.1.104.gtf.gz
+FASTA=$WKDIR/Sus_scrofa.Sscrofa11.1.dna.toplevel.fa
+GTF=$WKDIR/Sus_scrofa.Sscrofa11.1.104.gtf
 
 mkdir -p $STARDIR
 

@@ -127,3 +127,20 @@ bcftools index -t sus_scrofa.vcf.gz #needed .tbi
 
 known_indels	/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz
 known_indels_tbi	/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz.tbi
+
+##6/19/2024
+##1. Manually make STAR index
+#have to gunzip .gz fa and gtf files first
+[eak37@htc-n31 Sscrofa_v11.1_v104]$ gunzip -c Sus_scrofa.Sscrofa11.1.dna.toplevel.fa.gz > Sus_scrofa.Sscrofa11.1.dna.toplevel.fa &
+[eak37@htc-n31 Sscrofa_v11.1_v104]$ gunzip -c Sus_scrofa.Sscrofa11.1.104.gtf.gz > Sus_scrofa.Sscrofa11.1.104.gtf &
+
+##2. update json with STAR index and continuation
+  "star_index": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sscr11.1v104_STAR",
+  
+  also get VEP 104 cache for pig
+  https://ftp.ensembl.org/pub/release-104/variation/indexed_vep_cache/
+nohup wget -O sus_scrofa_vep_104_Sscrofa11.1.tar.gz https://ftp.ensembl.org/pub/release-104/variation/indexed_vep_cache/sus_scrofa_vep_104_Sscrofa11.1.tar.gz &
+tar -xvf sus_scrofa_vep_104_Sscrofa11.1.tar.gz
+
+
+

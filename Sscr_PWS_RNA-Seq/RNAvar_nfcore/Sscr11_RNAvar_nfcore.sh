@@ -1,4 +1,6 @@
-nextflow run nf-core/rnavar -r 1.0.0 \
+##did not use this script
+
+nextflow run /ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow/ -r 1.0.0 \
 	-name EAK_Sscr_RNAvar \
 	-profile htc \
 	-work-dir /bgfs/rnicholls/PWS_Sus_2017 \
@@ -14,4 +16,6 @@ nextflow run nf-core/rnavar -r 1.0.0 \
 	--known_indels /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz \
 	--known_indels_tbi /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz.tbi \
 	--aligner star\
-	--skip_variantannotation
+	--annotate_tools vep \
+	
+	/ihome/crc/install/genomics_nextflow/nf-core-cutandrun-3.0/workflow
