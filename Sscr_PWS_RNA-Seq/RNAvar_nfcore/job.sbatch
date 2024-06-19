@@ -17,5 +17,10 @@ export NXF_SINGULARITY_CACHEDIR=/ihome/crc/install/genomics_nextflow/nf-core-rna
 export SINGULARITY_CACHEDIR=/ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/singularity-images
 
 
-nextflow run /ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow -profile htc -name EAK_Sscr_RNAvar_attempt6 -work-dir /bgfs/rnicholls/PWS_Sus_2017 -params-file nf-params.json
+nextflow run /ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow \
+	-resume true \
+	-profile htc \
+	-name EAK_Sscr_RNAvar_attempt8 \
+	-work-dir /bgfs/rnicholls/PWS_Sus_2017 \
+	-params-file nf-params.json
 

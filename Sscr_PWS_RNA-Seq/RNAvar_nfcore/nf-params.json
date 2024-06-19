@@ -5,12 +5,10 @@
   "star_index": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sscr11.1v104_STAR",
   "multiqc_title": "EAK_Sscr_RNAvar_multiQC",
   "read_length": 75,
-  "snpeff_db": "Sscrofa11.1.99",
-  "vep_species": "pig",
   "known_indels": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz",
   "known_indels_tbi": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz.tbi",
+  "skip_variantannotation": true,
   "input": "/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/samplesheet.csv",
   "outdir": "/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/",
   "email": "eak37@pitt.edu"
 }
-
