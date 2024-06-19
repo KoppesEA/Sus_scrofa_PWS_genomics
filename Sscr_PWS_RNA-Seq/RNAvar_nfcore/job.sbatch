@@ -11,11 +11,11 @@
 unset TMPDIR
 
 module purge
-module load nextflow/22.10.7
+module load nextflow/23.10.1
 module load singularity/3.9.6
 export NXF_SINGULARITY_CACHEDIR=/ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/singularity-images
 export SINGULARITY_CACHEDIR=/ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/singularity-images
 
 
-nextflow run /ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow  -profile htc -name acadvl_rnavar_081523_refseq_1am -params-file nf-params.json
+nextflow run /ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow -profile htc -name EAK_Sscr_RNAvar_attempt6 -work-dir /bgfs/rnicholls/PWS_Sus_2017 -params-file nf-params.json
 

@@ -1,0 +1,1421 @@
+[33mNextflow 24.04.2 is available - Please consider updating your version to it(B[m
+N E X T F L O W  ~  version 23.10.1
+Launching `/ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow/main.nf` [EAK_Sscr_RNAvar_attempt6] DSL2 - revision: e58604470a
+WARN: Access to undefined parameter `genome` -- Initialise it to a default value eg. `params.genome = some_value`
+WARN: Access to undefined parameter `vep_genome` -- Initialise it to a default value eg. `params.vep_genome = some_value`
+WARN: Access to undefined parameter `snpeff_db` -- Initialise it to a default value eg. `params.snpeff_db = some_value`
+
+
+------------------------------------------------------
+                                        ,--./,-.
+        ___     __   __   __   ___     /,-._.--~'
+  |\ | |__  __ /  ` /  \ |__) |__         }  {
+  | \| |       \__, \__/ |  \ |___     \`-._,-`-,
+                                        `._,._,'
+  nf-core/rnavar v1.0.0
+------------------------------------------------------
+Core Nextflow options
+  runName                   : EAK_Sscr_RNAvar_attempt6
+  containerEngine           : singularity
+  container                 : [ENSEMBLVEP:nfcore/vep:104.3.null, SNPEFF:(dynamic resolved)]
+  launchDir                 : /bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore
+  workDir                   : /bgfs/rnicholls/PWS_Sus_2017
+  projectDir                : /ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow
+  userName                  : eak37
+  profile                   : htc
+  configFiles               : /ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow/nextflow.config
+
+Input/output options
+  input                     : /bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/samplesheet.csv
+  outdir                    : /bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/
+  email                     : eak37@pitt.edu
+  multiqc_title             : EAK_Sscr_RNAvar_multiQC
+
+Reference genome options
+  genome                    : GRCh38
+  fasta                     : /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sus_scrofa.Sscrofa11.1.dna.toplevel.fa.gz
+  igenomes_base             : /bgfs/genomics/refs/igenomes/
+  gtf                       : /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sus_scrofa.Sscrofa11.1.104.gtf.gz
+  gff                       : /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sus_scrofa.Sscrofa11.1.104.gff3.gz
+  read_length               : 75
+  known_indels              : /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz
+  known_indels_tbi          : /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz.tbi
+  snpeff_db                 : Sscrofa11.1.99
+  vep_species               : pig
+
+Alignment options
+  star_index                : /bgfs/genomics/refs/igenomes//Homo_sapiens/NCBI/GRCh38/Sequence/STARIndex/
+  star_twopass              : true
+
+Institutional config options
+  custom_config_base        : /ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow/../configs/
+  config_profile_description: Pitt HTC cluster profile provided by nf-core/configs.
+  config_profile_contact    : Fangping Mu
+  config_profile_url        : https://crc.pitt.edu/
+
+Max job request options
+  max_memory                : 256 GB
+  max_time                  : 6d
+
+!! Only displaying parameters that differ from the pipeline defaults !!
+------------------------------------------------------
+If you use nf-core/rnavar for your analysis please cite:
+
+* The nf-core framework
+  https://doi.org/10.1038/s41587-020-0439-x
+
+* Software dependencies
+  https://github.com/nf-core/rnavar/blob/master/CITATIONS.md
+------------------------------------------------------
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:INPUT_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:INPUT_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:INPUT_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:INPUT_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:INPUT_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:INPUT_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (1)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (2)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (3)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (3)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (3)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (3)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:FASTQC    [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (4)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[af/c694d4] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (5)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (5)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (6)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (7)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[c1/7fcf05] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (8)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[3a/2f0a02] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+
+executor >  slurm (8)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[3a/2f0a02] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+ERROR ~ Error executing process > 'NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)'
+
+Caused by:
+  Process `NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)` terminated with an error exit status (105)
+
+Command executed:
+
+  STAR \
+      --genomeDir STARIndex \
+      --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz  \
+      --runThreadN 12 \
+      --outFileNamePrefix 120-1_subline_1. \
+       \
+      --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf \
+      --outSAMattrRGline ID:120-1_subline_1 'SM:120-1_subline_1' 'PL:illumina'  \
+      --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat  --sjdbOverhang 74 --twopassMode Basic  --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  
+  
+  
+  if [ -f 120-1_subline_1.Unmapped.out.mate1 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate1 120-1_subline_1.unmapped_1.fastq
+      gzip 120-1_subline_1.unmapped_1.fastq
+  fi
+  if [ -f 120-1_subline_1.Unmapped.out.mate2 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate2 120-1_subline_1.unmapped_2.fastq
+      gzip 120-1_subline_1.unmapped_2.fastq
+  fi
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN":
+      star: $(STAR --version | sed -e "s/STAR_//g")
+  END_VERSIONS
+
+Command exit status:
+  105
+
+Command output:
+  	STAR --genomeDir STARIndex --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz --runThreadN 12 --outFileNamePrefix 120-1_subline_1. --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf --outSAMattrRGline ID:120-1_subline_1 SM:120-1_subline_1 PL:illumina --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --sjdbOverhang 74 --twopassMode Basic --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+  Jun 19 00:56:05 ..... started STAR run
+  Jun 19 00:56:05 ..... loading genome
+
+Command error:
+  
+  EXITING because of FATAL ERROR: Genome version: 20201 is INCOMPATIBLE with running STAR version: 2.7.9a
+  SOLUTION: please re-generate genome from scratch with running version of STAR, or with version: 2.7.4a
+  
+  Jun 19 00:56:05 ...... FATAL ERROR, exiting
+
+Work dir:
+  /bgfs/rnicholls/PWS_Sus_2017/c1/7fcf056df549ee9fc09256fa74b095
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '.nextflow.log' file for details
+
+executor >  slurm (8)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[3a/2f0a02] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [100%] 2 of 2, failed: 2 ✘
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   -
+Execution cancelled -- Finishing pending tasks before exit
+ERROR ~ Error executing process > 'NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)'
+
+Caused by:
+  Process `NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)` terminated with an error exit status (105)
+
+Command executed:
+
+  STAR \
+      --genomeDir STARIndex \
+      --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz  \
+      --runThreadN 12 \
+      --outFileNamePrefix 120-1_subline_1. \
+       \
+      --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf \
+      --outSAMattrRGline ID:120-1_subline_1 'SM:120-1_subline_1' 'PL:illumina'  \
+      --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat  --sjdbOverhang 74 --twopassMode Basic  --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  
+  
+  
+  if [ -f 120-1_subline_1.Unmapped.out.mate1 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate1 120-1_subline_1.unmapped_1.fastq
+      gzip 120-1_subline_1.unmapped_1.fastq
+  fi
+  if [ -f 120-1_subline_1.Unmapped.out.mate2 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate2 120-1_subline_1.unmapped_2.fastq
+      gzip 120-1_subline_1.unmapped_2.fastq
+  fi
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN":
+      star: $(STAR --version | sed -e "s/STAR_//g")
+  END_VERSIONS
+
+Command exit status:
+  105
+
+Command output:
+  	STAR --genomeDir STARIndex --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz --runThreadN 12 --outFileNamePrefix 120-1_subline_1. --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf --outSAMattrRGline ID:120-1_subline_1 SM:120-1_subline_1 PL:illumina --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --sjdbOverhang 74 --twopassMode Basic --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+  Jun 19 00:56:05 ..... started STAR run
+  Jun 19 00:56:05 ..... loading genome
+
+Command error:
+  
+  EXITING because of FATAL ERROR: Genome version: 20201 is INCOMPATIBLE with running STAR version: 2.7.9a
+  SOLUTION: please re-generate genome from scratch with running version of STAR, or with version: 2.7.4a
+  
+  Jun 19 00:56:05 ...... FATAL ERROR, exiting
+
+Work dir:
+  /bgfs/rnicholls/PWS_Sus_2017/c1/7fcf056df549ee9fc09256fa74b095
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '.nextflow.log' file for details
+
+executor >  slurm (8)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [  0%] 0 of 1
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[3a/2f0a02] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [100%] 2 of 2, failed: 2 ✘
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   [  0%] 0 of 1
+Execution cancelled -- Finishing pending tasks before exit
+ERROR ~ Error executing process > 'NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)'
+
+Caused by:
+  Process `NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)` terminated with an error exit status (105)
+
+Command executed:
+
+  STAR \
+      --genomeDir STARIndex \
+      --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz  \
+      --runThreadN 12 \
+      --outFileNamePrefix 120-1_subline_1. \
+       \
+      --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf \
+      --outSAMattrRGline ID:120-1_subline_1 'SM:120-1_subline_1' 'PL:illumina'  \
+      --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat  --sjdbOverhang 74 --twopassMode Basic  --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  
+  
+  
+  if [ -f 120-1_subline_1.Unmapped.out.mate1 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate1 120-1_subline_1.unmapped_1.fastq
+      gzip 120-1_subline_1.unmapped_1.fastq
+  fi
+  if [ -f 120-1_subline_1.Unmapped.out.mate2 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate2 120-1_subline_1.unmapped_2.fastq
+      gzip 120-1_subline_1.unmapped_2.fastq
+  fi
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN":
+      star: $(STAR --version | sed -e "s/STAR_//g")
+  END_VERSIONS
+
+Command exit status:
+  105
+
+Command output:
+  	STAR --genomeDir STARIndex --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz --runThreadN 12 --outFileNamePrefix 120-1_subline_1. --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf --outSAMattrRGline ID:120-1_subline_1 SM:120-1_subline_1 PL:illumina --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --sjdbOverhang 74 --twopassMode Basic --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+  Jun 19 00:56:05 ..... started STAR run
+  Jun 19 00:56:05 ..... loading genome
+
+Command error:
+  
+  EXITING because of FATAL ERROR: Genome version: 20201 is INCOMPATIBLE with running STAR version: 2.7.9a
+  SOLUTION: please re-generate genome from scratch with running version of STAR, or with version: 2.7.4a
+  
+  Jun 19 00:56:05 ...... FATAL ERROR, exiting
+
+Work dir:
+  /bgfs/rnicholls/PWS_Sus_2017/c1/7fcf056df549ee9fc09256fa74b095
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '.nextflow.log' file for details
+
+executor >  slurm (8)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [  0%] 0 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[3a/2f0a02] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [100%] 2 of 2, failed: 2 ✘
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   [  0%] 0 of 1
+Execution cancelled -- Finishing pending tasks before exit
+ERROR ~ Error executing process > 'NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)'
+
+Caused by:
+  Process `NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)` terminated with an error exit status (105)
+
+Command executed:
+
+  STAR \
+      --genomeDir STARIndex \
+      --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz  \
+      --runThreadN 12 \
+      --outFileNamePrefix 120-1_subline_1. \
+       \
+      --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf \
+      --outSAMattrRGline ID:120-1_subline_1 'SM:120-1_subline_1' 'PL:illumina'  \
+      --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat  --sjdbOverhang 74 --twopassMode Basic  --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  
+  
+  
+  if [ -f 120-1_subline_1.Unmapped.out.mate1 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate1 120-1_subline_1.unmapped_1.fastq
+      gzip 120-1_subline_1.unmapped_1.fastq
+  fi
+  if [ -f 120-1_subline_1.Unmapped.out.mate2 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate2 120-1_subline_1.unmapped_2.fastq
+      gzip 120-1_subline_1.unmapped_2.fastq
+  fi
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN":
+      star: $(STAR --version | sed -e "s/STAR_//g")
+  END_VERSIONS
+
+Command exit status:
+  105
+
+Command output:
+  	STAR --genomeDir STARIndex --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz --runThreadN 12 --outFileNamePrefix 120-1_subline_1. --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf --outSAMattrRGline ID:120-1_subline_1 SM:120-1_subline_1 PL:illumina --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --sjdbOverhang 74 --twopassMode Basic --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+  Jun 19 00:56:05 ..... started STAR run
+  Jun 19 00:56:05 ..... loading genome
+
+Command error:
+  
+  EXITING because of FATAL ERROR: Genome version: 20201 is INCOMPATIBLE with running STAR version: 2.7.9a
+  SOLUTION: please re-generate genome from scratch with running version of STAR, or with version: 2.7.4a
+  
+  Jun 19 00:56:05 ...... FATAL ERROR, exiting
+
+Work dir:
+  /bgfs/rnicholls/PWS_Sus_2017/c1/7fcf056df549ee9fc09256fa74b095
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '.nextflow.log' file for details
+
+executor >  slurm (8)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[b7/259866] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [ 50%] 1 of 2
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[3a/2f0a02] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [100%] 2 of 2, failed: 2 ✘
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   [  0%] 0 of 1
+
+ERROR ~ Error executing process > 'NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)'
+
+Caused by:
+  Process `NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)` terminated with an error exit status (105)
+
+Command executed:
+
+  STAR \
+      --genomeDir STARIndex \
+      --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz  \
+      --runThreadN 12 \
+      --outFileNamePrefix 120-1_subline_1. \
+       \
+      --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf \
+      --outSAMattrRGline ID:120-1_subline_1 'SM:120-1_subline_1' 'PL:illumina'  \
+      --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat  --sjdbOverhang 74 --twopassMode Basic  --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  
+  
+  
+  if [ -f 120-1_subline_1.Unmapped.out.mate1 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate1 120-1_subline_1.unmapped_1.fastq
+      gzip 120-1_subline_1.unmapped_1.fastq
+  fi
+  if [ -f 120-1_subline_1.Unmapped.out.mate2 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate2 120-1_subline_1.unmapped_2.fastq
+      gzip 120-1_subline_1.unmapped_2.fastq
+  fi
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN":
+      star: $(STAR --version | sed -e "s/STAR_//g")
+  END_VERSIONS
+
+Command exit status:
+  105
+
+Command output:
+  	STAR --genomeDir STARIndex --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz --runThreadN 12 --outFileNamePrefix 120-1_subline_1. --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf --outSAMattrRGline ID:120-1_subline_1 SM:120-1_subline_1 PL:illumina --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --sjdbOverhang 74 --twopassMode Basic --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+  Jun 19 00:56:05 ..... started STAR run
+  Jun 19 00:56:05 ..... loading genome
+
+Command error:
+  
+  EXITING because of FATAL ERROR: Genome version: 20201 is INCOMPATIBLE with running STAR version: 2.7.9a
+  SOLUTION: please re-generate genome from scratch with running version of STAR, or with version: 2.7.4a
+  
+  Jun 19 00:56:05 ...... FATAL ERROR, exiting
+
+Work dir:
+  /bgfs/rnicholls/PWS_Sus_2017/c1/7fcf056df549ee9fc09256fa74b095
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '.nextflow.log' file for details
+
+executor >  slurm (8)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[af/c694d4] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [100%] 2 of 2 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[3a/2f0a02] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [100%] 2 of 2, failed: 2 ✘
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   [  0%] 0 of 1
+ERROR ~ Error executing process > 'NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)'
+
+Caused by:
+  Process `NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)` terminated with an error exit status (105)
+
+Command executed:
+
+  STAR \
+      --genomeDir STARIndex \
+      --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz  \
+      --runThreadN 12 \
+      --outFileNamePrefix 120-1_subline_1. \
+       \
+      --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf \
+      --outSAMattrRGline ID:120-1_subline_1 'SM:120-1_subline_1' 'PL:illumina'  \
+      --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat  --sjdbOverhang 74 --twopassMode Basic  --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  
+  
+  
+  if [ -f 120-1_subline_1.Unmapped.out.mate1 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate1 120-1_subline_1.unmapped_1.fastq
+      gzip 120-1_subline_1.unmapped_1.fastq
+  fi
+  if [ -f 120-1_subline_1.Unmapped.out.mate2 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate2 120-1_subline_1.unmapped_2.fastq
+      gzip 120-1_subline_1.unmapped_2.fastq
+  fi
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN":
+      star: $(STAR --version | sed -e "s/STAR_//g")
+  END_VERSIONS
+
+Command exit status:
+  105
+
+Command output:
+  	STAR --genomeDir STARIndex --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz --runThreadN 12 --outFileNamePrefix 120-1_subline_1. --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf --outSAMattrRGline ID:120-1_subline_1 SM:120-1_subline_1 PL:illumina --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --sjdbOverhang 74 --twopassMode Basic --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+  Jun 19 00:56:05 ..... started STAR run
+  Jun 19 00:56:05 ..... loading genome
+
+Command error:
+  
+  EXITING because of FATAL ERROR: Genome version: 20201 is INCOMPATIBLE with running STAR version: 2.7.9a
+  SOLUTION: please re-generate genome from scratch with running version of STAR, or with version: 2.7.4a
+  
+  Jun 19 00:56:05 ...... FATAL ERROR, exiting
+
+Work dir:
+  /bgfs/rnicholls/PWS_Sus_2017/c1/7fcf056df549ee9fc09256fa74b095
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '.nextflow.log' file for details
+
+
+executor >  slurm (8)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[af/c694d4] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [100%] 2 of 2 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[3a/2f0a02] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [100%] 2 of 2, failed: 2 ✘
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   [  0%] 0 of 1
+-[nf-core/rnavar] Sent summary e-mail to eak37@pitt.edu (sendmail)-
+-[nf-core/rnavar] Pipeline completed with errors-
+ERROR ~ Error executing process > 'NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)'
+
+Caused by:
+  Process `NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)` terminated with an error exit status (105)
+
+Command executed:
+
+  STAR \
+      --genomeDir STARIndex \
+      --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz  \
+      --runThreadN 12 \
+      --outFileNamePrefix 120-1_subline_1. \
+       \
+      --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf \
+      --outSAMattrRGline ID:120-1_subline_1 'SM:120-1_subline_1' 'PL:illumina'  \
+      --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat  --sjdbOverhang 74 --twopassMode Basic  --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  
+  
+  
+  if [ -f 120-1_subline_1.Unmapped.out.mate1 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate1 120-1_subline_1.unmapped_1.fastq
+      gzip 120-1_subline_1.unmapped_1.fastq
+  fi
+  if [ -f 120-1_subline_1.Unmapped.out.mate2 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate2 120-1_subline_1.unmapped_2.fastq
+      gzip 120-1_subline_1.unmapped_2.fastq
+  fi
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN":
+      star: $(STAR --version | sed -e "s/STAR_//g")
+  END_VERSIONS
+
+Command exit status:
+  105
+
+Command output:
+  	STAR --genomeDir STARIndex --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz --runThreadN 12 --outFileNamePrefix 120-1_subline_1. --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf --outSAMattrRGline ID:120-1_subline_1 SM:120-1_subline_1 PL:illumina --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --sjdbOverhang 74 --twopassMode Basic --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+  Jun 19 00:56:05 ..... started STAR run
+  Jun 19 00:56:05 ..... loading genome
+
+Command error:
+  
+  EXITING because of FATAL ERROR: Genome version: 20201 is INCOMPATIBLE with running STAR version: 2.7.9a
+  SOLUTION: please re-generate genome from scratch with running version of STAR, or with version: 2.7.4a
+  
+  Jun 19 00:56:05 ...... FATAL ERROR, exiting
+
+Work dir:
+  /bgfs/rnicholls/PWS_Sus_2017/c1/7fcf056df549ee9fc09256fa74b095
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '.nextflow.log' file for details
+
+executor >  slurm (8)
+[59/456d32] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[89/657663] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[9f/020a05] process > NFCORE_RNAVAR:RNAVAR:PREPAR... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:PREPAR... -
+[ec/8ba8fd] process > NFCORE_RNAVAR:RNAVAR:INPUT_... [100%] 1 of 1 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CAT_FASTQ -
+[af/c694d4] process > NFCORE_RNAVAR:RNAVAR:FASTQC... [100%] 2 of 2 ✔
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[3a/2f0a02] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... [100%] 2 of 2, failed: 2 ✘
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:ALIGN_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MARKDU... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:SPLITN... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:RECALI... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:TABIX     -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:GATK4_... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:CUSTOM... -
+[-        ] process > NFCORE_RNAVAR:RNAVAR:MULTIQC   [  0%] 0 of 1
+-[nf-core/rnavar] Sent summary e-mail to eak37@pitt.edu (sendmail)-
+-[nf-core/rnavar] Pipeline completed with errors-
+ERROR ~ Error executing process > 'NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)'
+
+Caused by:
+  Process `NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN (120-1_subline_1)` terminated with an error exit status (105)
+
+Command executed:
+
+  STAR \
+      --genomeDir STARIndex \
+      --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz  \
+      --runThreadN 12 \
+      --outFileNamePrefix 120-1_subline_1. \
+       \
+      --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf \
+      --outSAMattrRGline ID:120-1_subline_1 'SM:120-1_subline_1' 'PL:illumina'  \
+      --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat  --sjdbOverhang 74 --twopassMode Basic  --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  
+  
+  
+  if [ -f 120-1_subline_1.Unmapped.out.mate1 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate1 120-1_subline_1.unmapped_1.fastq
+      gzip 120-1_subline_1.unmapped_1.fastq
+  fi
+  if [ -f 120-1_subline_1.Unmapped.out.mate2 ]; then
+      mv 120-1_subline_1.Unmapped.out.mate2 120-1_subline_1.unmapped_2.fastq
+      gzip 120-1_subline_1.unmapped_2.fastq
+  fi
+  
+  cat <<-END_VERSIONS > versions.yml
+  "NFCORE_RNAVAR:RNAVAR:ALIGN_STAR:STAR_ALIGN":
+      star: $(STAR --version | sed -e "s/STAR_//g")
+  END_VERSIONS
+
+Command exit status:
+  105
+
+Command output:
+  	STAR --genomeDir STARIndex --readFilesIn 120-1_subline_1_S1_R1_001.fastq.gz 120-1_subline_1_S1_R2_001.fastq.gz --runThreadN 12 --outFileNamePrefix 120-1_subline_1. --sjdbGTFfile Sus_scrofa.Sscrofa11.1.104.gtf --outSAMattrRGline ID:120-1_subline_1 SM:120-1_subline_1 PL:illumina --outSAMtype BAM SortedByCoordinate --readFilesCommand zcat --sjdbOverhang 74 --twopassMode Basic --outBAMsortingBinsN 50 --limitOutSJcollapsed 1000000
+  	STAR version: 2.7.9a   compiled: 2021-05-04T09:43:56-0400 vega:/home/dobin/data/STAR/STARcode/STAR.master/source
+  Jun 19 00:56:05 ..... started STAR run
+  Jun 19 00:56:05 ..... loading genome
+
+Command error:
+  
+  EXITING because of FATAL ERROR: Genome version: 20201 is INCOMPATIBLE with running STAR version: 2.7.9a
+  SOLUTION: please re-generate genome from scratch with running version of STAR, or with version: 2.7.4a
+  
+  Jun 19 00:56:05 ...... FATAL ERROR, exiting
+
+Work dir:
+  /bgfs/rnicholls/PWS_Sus_2017/c1/7fcf056df549ee9fc09256fa74b095
+
+Tip: when you have fixed the problem you can continue the execution adding the option `-resume` to the run command line
+
+ -- Check '.nextflow.log' file for details
+

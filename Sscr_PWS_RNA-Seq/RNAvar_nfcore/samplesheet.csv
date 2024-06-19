@@ -1,3 +1,3 @@
 sample,fastq_1,fastq_2,strandedness
-120-1_subline_1, /bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_1_S1_R1_001.fastq.gz, /bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_1_S1_R2_001.fastq.gz, unstranded
-120-1_subline_2, /bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_2_S2_R1_001.fastq.gz, /bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_2_S2_R2_001.fastq.gz, unstranded
+120-1_subline_1,/bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_1_S1_R1_001.fastq.gz,/bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_1_S1_R2_001.fastq.gz,unstranded
+120-1_subline_2,/bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_2_S2_R1_001.fastq.gz,/bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_2_S2_R2_001.fastq.gz,unstranded
