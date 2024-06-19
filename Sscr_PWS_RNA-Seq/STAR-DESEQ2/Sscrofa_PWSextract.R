@@ -1,4 +1,4 @@
-##script to import .gtf and then extract Snord115 and Snor116 sequences
+##script to import .gtf and then extract Snord115 and Snord116 sequences
 ##Erik Koppes 3/9/20
 
 library(tidyverse)
