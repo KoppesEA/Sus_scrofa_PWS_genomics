@@ -1,8 +1,3 @@
 sample,fastq_1,fastq_2,strandedness
-FB801,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB801_R1_001.fastq.gz,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB801_R2_001.fastq.gz,reverse
-FB813,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB813_R1_001.fastq.gz,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB813_R2_001.fastq.gz,reverse
-FB826,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB826_R1_001.fastq.gz,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB826_R2_001.fastq.gz,reverse
-FB865,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB865_R1_001.fastq.gz,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB865_R2_001.fastq.gz,reverse
-FB886,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB886_R1_001.fastq.gz,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB886_R2_001.fastq.gz,reverse
-FB896,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB896_R1_001.fastq.gz,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB896_R2_001.fastq.gz,reverse
-FB906,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB906_R1_001.fastq.gz,/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/30-853732567/00_fastq/FB906_R2_001.fastq.gz,reverse
+120-1_subline_1, /bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_1_S1_R1_001.fastq.gz, /bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_1_S1_R2_001.fastq.gz, unstranded
+120-1_subline_2, /bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_2_S2_R1_001.fastq.gz, /bgfs/rnicholls/PWS_Sus_2017/raw_fastq/120-1_subline_2_S2_R2_001.fastq.gz, unstranded

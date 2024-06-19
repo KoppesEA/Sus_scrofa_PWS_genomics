@@ -7,4 +7,123 @@ nohup wget -O Sus_scrofa.Sscrofa11.1.104.gff3.gz https://ftp.ensembl.org/pub/rel
 module load snpeff/4.3t
 java -jar snpEff.jar databases ##didn't work, need to be in snpEff directory
 
+vep --species --help --database
 
+/bgfs/rnicholls/PWS_Sus_2017/raw_fastq
+
+module load rseqc/2.6.6
+module load bedops/2.4.35
+[eak37@htc-n38 SscrofaSus_v11.1.98]$ pwd
+/bgfs/rnicholls/REFGenomes/SscrofaSus_v11.1.98
+
+awk '{ if ($0 ~ "transcript_id") print $0; else print $0" transcript_id \"\";"; }' Sus_scrofa.Sscrofa11.1.98.gtf | gtf2bed - > Sus_scrofa.Sscrofa11.1.98.bed
+
+[eak37@htc-n38 120-1_subline_1_S1]$ pwd
+/bgfs/rnicholls/PWS_Sus_2017/STAR_Susv98/120-1_subline_1_S1
+wget https://github.com/MultiQC/MultiQC/blob/main/multiqc/modules/rseqc/infer_experiment.py
+
+infer_experiment.py -r /bgfs/rnicholls/REFGenomes/SscrofaSus_v11.1.98/Sus_scrofa.Sscrofa11.1.98.bed -i /bgfs/rnicholls/PWS_Sus_2017/STAR_Susv98/120-1_subline_1_S1/120-1_subline_1_S1Aligned.sortedByCoord.out.bam
+Reading reference gene model /bgfs/rnicholls/REFGenomes/SscrofaSus_v11.1.98/Sus_scrofa.Sscrofa11.1.98.bed ... Done
+Loading SAM/BAM file ...  Total 200000 usable reads were sampled
+
+
+This is PairEnd Data
+Fraction of reads failed to determine: 0.0137
+Fraction of reads explained by "1++,1--,2+-,2-+": 0.4928
+Fraction of reads explained by "1+-,1-+,2++,2--": 0.4936
+
+## So this is un-stranded paired-end data. It is not strand-specific
+
+[eak37@htc-n38 PWS_Sus_2017]$ mkdir RNAvar-nfcore
+[eak37@htc-n38 PWS_Sus_2017]$ pwd
+/bgfs/rnicholls/PWS_Sus_2017
+
+nf core RNA-var pieline
+--name  EAK_Sscr_RNAvar_attempt1
+--profile htc
+-work-dir /bgfs/rnicholls/PWS_Sus_2017
+-resume false
+
+input /bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/samplesheet.csv
+outdir /bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/
+multiqc_title EAK_Sscr_RNAvar_multiQC
+saved_mergedfastq false
+
+genome Sscrofa_v11.1
+fasta  /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/us_scrofa.Sscrofa11.1.dna.toplevel.fa.gz
+dict
+fasta_fai
+gtf /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sus_scrofa.Sscrofa11.1.104.gtf.gz
+gff /bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sus_scrofa.Sscrofa11.1.112.gff3.gz
+exon bed
+read_length 75
+save_reference true (first time then specify star_index)
+known_indels
+known_indels_tbi
+dbsnp
+dbsnp_tbi
+snpeff_db Sscrofa11.1.99
+vep_genome
+vep_species
+vep_cache_version
+
+aligner STAR
+star_index
+star_twopass False
+star_ignor_sjdbgtf false
+star_max_memory_bamsort 0
+star_bins_bamsort 50
+star_max_collapsed_junc 100000
+seq_center
+save_unaligned false
+save_align_intermeds false
+bam_csi_index false
+
+skip_baserecalibration false
+skip_intervallisttools false
+skip_variantannotation false
+skip_multiqc false
+
+gatks_interval_scatter_count 25
+no_intervals false
+gatk_vf_window_size 35
+gatk_vf_cluster_size
+gatk_vf_fs_filter 30
+gatk_vf_qd_filter 2
+
+
+
+
+{
+  "gtf": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sus_scrofa.Sscrofa11.1.104.gtf.gz",
+  "gff": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sus_scrofa.Sscrofa11.1.112.gff3.gz",
+  "multiqc_title": "Sscr_PWS_RNAvar_nfcore",
+  "snpeff_db": "GRCh38.p14",
+  "fasta": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/us_scrofa.Sscrofa11.1.dna.toplevel.fa.gz",
+  "star_index": "/bgfs/jvockley/KoppesEA/RefGenomes/GRCh38p14/Refseq/STAR",
+  "dbsnp_tbi": "/bgfs/jvockley/KoppesEA/RefGenomes/GRCh38p14/Dbsnp/GRCh38.p14_dbsnp.vcf.gz.tbi",
+  "dbsnp": "/bgfs/jvockley/KoppesEA/RefGenomes/GRCh38p14/Dbsnp/GRCh38.p14_dbsnp.vcf.gz",
+  "star_twopass": true,
+  "input": "/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/nfcore_rnavar/samplesheet.csv",
+  "outdir": "/bgfs/jvockley/KoppesEA/ACADVL_RNASEQ/nfcore_rnavar/Refseq_Dbsnp",
+  "email": "eak37@pitt.edu"
+}
+
+WARN: Access to undefined parameter `genome` -- Initialise it to a default value eg. `params.genome = some_value`
+WARN: Access to undefined parameter `vep_genome` -- Initialise it to a default value eg. `params.vep_genome = some_value`
+WARN: Access to undefined parameter `snpeff_db` -- Initialise it to a default value eg. `params.snpeff_db = some_value
+
+ERROR ~ Known variants VCF file or its index is missing!. At least --dbsnp (and its index) or --known_indels (and its index) is required
+## says it needs either known indels or dbSNP 
+[eak37@htc-n38 RNAvar-nfcore]$ cd ../../REFGenomes/Sscrofa
+SscrofaSus_v11.1.98/ Sscrofa_v11.1_v104/  
+wget -O sus_scrofa.vcf.gz https://ftp.ensembl.org/pub/release-104/variation/vcf/sus_scrofa/sus_scrofa.vcf.gz
+wget -O sus_scrofa.vcf.gz.csi https://ftp.ensembl.org/pub/release-104/variation/vcf/sus_scrofa/sus_scrofa.vcf.gz.csi
+make a tbi index
+module load bcftools/1.15.1
+bcftools index sus_scrofa.vcf.gz
+bcftools index -t sus_scrofa.vcf.gz #needed .tbi
+
+
+known_indels	/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz
+known_indels_tbi	/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz.tbi
