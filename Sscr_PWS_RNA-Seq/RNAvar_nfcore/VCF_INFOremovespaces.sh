@@ -10,5 +10,7 @@
 module load gcc/8.2.0
 module load htslib/1.9
 
-bgzip -d -c | awk -v FS='\t' -v OFS='\t' '{gsub(/ /, "_", $8); print}' | bgzip -o sus_scrofa_forGATK.vcf.gz
+bgzip -d -c | awk -v FS='\t' -v OFS='\t' '{gsub(/ /, "_", $8); print}' | bgzip -c >  sus_scrofa_forGATK.vcf.gz
 tabix -p sus_scrofa_forGATK.vcf.gz
+
+sus_scrofa_forGATK.vcf.gz
