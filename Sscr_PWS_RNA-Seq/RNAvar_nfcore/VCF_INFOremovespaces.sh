@@ -7,6 +7,9 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=16g #
 
+module load gcc/8.2.0
+module load
 module load bcftools/1.15.1
 
-bgzip -c -d sus_scrofa.vcf.gz | awk -v FS='\t' -v OFS='\t' '{gsub(/ /, "_", $8); print}' | bgzip > sus_scrofa_forGATK.vcf.gz
+bcftools view sus_scrofa.vcf.gz | awk -v FS='\t' -v OFS='\t' '{gsub(/ /, "_", $8); print}' | bcftools view -Oz -o sus_scrofa_forGATK.vcf.gz
+bcftools index -t sus_scrofa_forGATK.vcf.gz
