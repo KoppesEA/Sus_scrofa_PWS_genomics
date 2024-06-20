@@ -137,10 +137,9 @@ known_indels_tbi	/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa.vcf.gz
 ##2. update json with STAR index and continuation
   "star_index": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/Sscr11.1v104_STAR",
   
-  also get VEP 104 cache for pig
-  https://ftp.ensembl.org/pub/release-104/variation/indexed_vep_cache/
+#also get VEP 104 cache for pig
+#https://ftp.ensembl.org/pub/release-104/variation/indexed_vep_cache/
 nohup wget -O sus_scrofa_vep_104_Sscrofa11.1.tar.gz https://ftp.ensembl.org/pub/release-104/variation/indexed_vep_cache/sus_scrofa_vep_104_Sscrofa11.1.tar.gz &
 tar -xvf sus_scrofa_vep_104_Sscrofa11.1.tar.gz
-
 
 
