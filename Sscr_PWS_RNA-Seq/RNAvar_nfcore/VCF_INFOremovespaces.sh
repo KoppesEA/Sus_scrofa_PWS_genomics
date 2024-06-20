@@ -8,8 +8,7 @@
 #SBATCH --mem=16g #
 
 module load gcc/8.2.0
-module load
-module load bcftools/1.15.1
+module load htslib/1.9
 
-bcftools view sus_scrofa.vcf.gz | awk -v FS='\t' -v OFS='\t' '{gsub(/ /, "_", $8); print}' | bcftools view -Oz -o sus_scrofa_forGATK.vcf.gz
-bcftools index -t sus_scrofa_forGATK.vcf.gz
+bgzip -d -c | awk -v FS='\t' -v OFS='\t' '{gsub(/ /, "_", $8); print}' | bgzip -o sus_scrofa_forGATK.vcf.gz
+tabix -p sus_scrofa_forGATK.vcf.gz
