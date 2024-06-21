@@ -193,5 +193,15 @@ bcftools index -t sus_scrofa_forGATK.vcf.gz #needed .tbi
 
 ##couldn't tabix gzipped file, need to call bgzip from samtools or bcftools 
 
+#after rewriting script to use htslib bgzip the output file is now matching at 661MB and a .tbi file was generated
+
+##changed workdir to RNAvar-nfcore/work
+
+removing intermediate files from  total-RNA-seq dir above
+rm -rf [a-z0-9][a-z0-9] #rm doesn't use regex like ^ and $
+find . -type d -regex './[a-z0-9]\{2\}' -exec rm -rf {} + # different option using find regex and execute rm
+find . -type d -regex './[a-z|0-9][a-z|0-9]' ##this actually works
+find . -type d -regex './[a-z|0-9]\{2\}'
+
 
 
