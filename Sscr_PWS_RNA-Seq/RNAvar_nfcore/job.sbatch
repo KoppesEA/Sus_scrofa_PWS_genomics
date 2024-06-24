@@ -20,7 +20,8 @@ export SINGULARITY_CACHEDIR=/ihome/crc/install/genomics_nextflow/nf-core-rnavar-
 nextflow run /ihome/crc/install/genomics_nextflow/nf-core-rnavar-1.0.0/workflow \
 	-resume \
 	-profile htc \
-	-name EAK_Sscr_RNAvar_attempt13 \
+	-name EAK_Sscr_RNAvar_attempt15 \
 	-work-dir /bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/work \
+	--skip_variantannotation \
 	-params-file nf-params.json
 

@@ -7,12 +7,6 @@
   "read_length": 75,
   "known_indels": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa_forGATK.vcf.gz",
   "known_indels_tbi": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa_forGATK.vcf.gz.tbi",
-  "annotate_tools": "vep",  
-  "vep_cache": "/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa/104_Sscrofa11.1",
-  "vep_species": "sus_scrofa",
-  "vep_genome": "Sscrofa11.1",
-  "vep_cache_version": "104",
-  "annotation_cache": true,
   "input": "/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/samplesheet.csv",
   "outdir": "/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/",
   "email": "eak37@pitt.edu"
