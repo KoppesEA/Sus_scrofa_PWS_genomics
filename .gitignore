@@ -3,9 +3,14 @@
 **/.DS_Store
 Sscr_PWS_RNA-Seq/.DS_Store
 Sscr_PWS_WGS_Illumina/BashScripts/VCFtools_man.txt
-GSE_139512_PigOocytescRNAseq/GSE139512_fpkm.txt.gz
+GSE_139512_PigOocytescRNAseq/Sscr_GTF/GSE139512_fpkm.txt.gz
 
 # Default R files
+
+##large .Rds
+*.rds
+**/*.rds
+
 # History files
 .Rhistory
 .Rapp.history
