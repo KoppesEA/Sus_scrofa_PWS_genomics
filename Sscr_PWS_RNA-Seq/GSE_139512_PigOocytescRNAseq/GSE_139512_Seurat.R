@@ -61,28 +61,24 @@ source("GSE139512_metaScript.R")
 GSE_139512_meta <- bind_cols(
   Sample_Name = colnames(GSE139512_df),
   Cell_Type = c(rep("Oocyte", 2), rep("1-Cell", 3), rep("2-Cell", 6), "2-Cell-Pool", rep("4-Cell", 13), "4-Cell-Pool", rep("8-Cell", 25), "8-Cell-Pool",
-                rep("Morula", 30), "Morula_Pull", rep("Blast-1cell", 2), rep("Blast-ICM", 3), rep("Blast-TE",3))
-)
-
-GSE_139512_meta_t <- bind_rows(Sample_Name = colnames(GSE139512_df),
-          Cell_Type = c(rep("Oocyte", 2), rep("1-Cell", 3), rep("2-Cell", 6), "2-Cell-Pool", rep("4-Cell", 13), "4-Cell-Pool", rep("8-Cell", 25), "8-Cell-Pool",
-                        rep("Morula", 30), "Morula_Pull", rep("Blast-1cell", 2), rep("Blast-ICM", 3), rep("Blast-TE",3)))
+                rep("Morula", 30), "Morula-Pool", rep("Blast-1cell", 2), rep("Blast-ICM", 3), rep("Blast-TE",3)),
+  Experiment = c(GSE_139512_SraRunTbl$Experiment[79:80], GSE_139512_SraRunTbl$Experiment[86:88], GSE_139512_SraRunTbl$Experiment[1:7], # 7 2-cell includes pooled
+                 GSE_139512_SraRunTbl$Experiment[8:21], GSE_139512_SraRunTbl$Experiment[22:45], rep(NA, 2), GSE_139512_SraRunTbl$Experiment[49:78], NA, # 14 4-cell includes pooled, 24 8-cell is short an 8-cell and pool, 30 morula no pooled?
+                 GSE_139512_SraRunTbl$Experiment[81:82], GSE_139512_SraRunTbl$Experiment[46:48], GSE_139512_SraRunTbl$Experiment[83:85]),
+  Run = c(GSE_139512_SraRunTbl$Run[79:80], GSE_139512_SraRunTbl$Run[86:88], GSE_139512_SraRunTbl$Run[1:7], # 7 2-cell includes pooled
+               GSE_139512_SraRunTbl$Run[8:21], GSE_139512_SraRunTbl$Run[22:45], rep(NA, 2), GSE_139512_SraRunTbl$Run[49:78], NA, # 14 4-cell includes pooled, 24 8-cell is short an 8-cell and pool, 30 morula no pooled?
+               GSE_139512_SraRunTbl$Run[81:82], GSE_139512_SraRunTbl$Run[46:48], GSE_139512_SraRunTbl$Run[83:85]))
   
-# Extract metadata from matrix
+# Set series_full a meta_df with Sample_Name as rowname
 series_full <- GSE_139512_meta %>% column_to_rownames(var = "Sample_Name")
-# series_full_t <- data.frame(t(series_full)) #not needed 
-# Bindcols and Transpose metadata; Cell names as rows and  Description as columns
 
-colnames(series_full_t) <- c("Celltype", "Stage", "Meta_ID")
 all(rownames(series_full) == colnames(GSE139512_df))  ##all TRUE--goodtogo
 
 # Create Seurat Object
-GSE57249_seurat <- CreateSeuratObject(counts = GSE139512_df, meta.data = series_full_t)
+GSE57249_seurat <- CreateSeuratObject(counts = GSE139512_df, meta.data = series_full)
 
-# > GSE57249_seurat <- CreateSeuratObject(counts = GSE139512_df, meta.data = series_full_t)
 # Warning: Feature names cannot have underscores ('_'), replacing with dashes ('-')
 # Warning: Data is of class data.frame. Coercing to dgCMatrix.
-# Warning: Cannot add more or less meta data without cell names
 
 # Does not appear to be Mitochondrial Features or Read counts in this gencode annotated trancriptomic data
 GSE57249_seurat[["percent.mt"]] <- PercentageFeatureSet(GSE57249_seurat, pattern = "^MT-1") ## Gencode uses "^MT-" to denote mitochondrial genes
@@ -96,17 +92,27 @@ summary(GSE57249_seurat@meta.data$percent.mt)
 #######################-----------#################
 
 # Visualize QC metrics as a violin plot; at least one zygote should be removed due to low feature and ncounts
-VlnPlot(CPB_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
-VlnPlot(CPB_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = 'emstage')
+VlnPlot(GSE57249_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+VlnPlot(GSE57249_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = 'Cell_Type')
 
 # FeatureScatter plot to see correlation of nFeature and nCount
-FeatureScatter(CPB_seurat, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-##maybe 2 2C em to remove (1 high ncount, 1 low nFeature)
-##maybe 1 Z to remove (1 high nCount)
+FeatureScatter(GSE57249_seurat, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+## perhaps need to remove pull/pool samples or combine into cells
+##m Extreme outlier in 2-cell_1_2 nCount_RNA
 
-# # Filter bad zygote
-# CPB_seurat@meta.data %>% filter(Celltype == "zygote") %>% arrange(desc(nCount_RNA)) #GSM1377865 sample Z7 has abberrantly low nCount and nFeature
-# GSE57249_seurat <- subset(GSE57249_seurat, subset = Meta_ID != "Z7")
+# # Filter bad zygote --to revise filtering here for bad 2-cell
+# GSE57249_seurat@meta.data %>% filter(Cell_Type == "zygote") %>% arrange(desc(nCount_RNA)) #GSM1377865 sample Z7 has abberrantly low nCount and nFeature
+GSE57249_seurat_filter <- subset(GSE57249_seurat, subset = Experiment != "SRX7066509")
+
+# Idents(GSE57249_seurat)  %>% grepl(pattern = "2-cell")
+# identities <- Idents(GSE57249_seurat)
+# identities <- as.character(identities)
+# print(any(identities == "2-cell_1_2"))
+##easiest just to addback a full label as orig.ident to metadata....
+
+# FeatureScatter plot of filtered to see correlation of nFeature and nCount
+FeatureScatter(GSE57249_seurat_filter, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+subset(GSE57249_seurat_filter, subset, Idents %in% c("1-cell","2-Cell", "4-Cell")) %>%  FeatureScatter(feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 
 # Normalization
 CPB_seurat <- NormalizeData(CPB_seurat, normalization.method = "LogNormalize", scale.factor = 10000) #default norm param
