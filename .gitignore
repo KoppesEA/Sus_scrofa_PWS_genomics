@@ -2,7 +2,12 @@
 .DS_Store
 **/.DS_Store
 Sscr_PWS_RNA-Seq/.DS_Store
+
+# help and manfiles to ignore
 Sscr_PWS_WGS_Illumina/BashScripts/VCFtools_man.txt
+Sscr_PWS_RNA-Seq/RNAvar_nfcore/vep_help.txt
+
+## scRNA-Seq input/output to ignore
 Sscr_PWS_RNA-Seq/GSE_139512_PigOocytescRNAseq/GSE139512_fpkm.txt.gz
 Sscr_PWS_RNA-Seq/GSE_139512_PigOocytescRNAseq/GSE139512%5Ffpkm.txt
 Sscr_PWS_RNA-Seq/GSE_139512_PigOocytescRNAseq/GSE139512%5Ffpkm.txt.gz

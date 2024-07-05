@@ -245,6 +245,17 @@ tail -n 100 nextflow_head.out
       --dir_cache ${PWD}/104_Sscrofa11.1 \
 
   MSG: ERROR: Cache directory /scratch/slurm-3351186/nxf.I5ZuJhkTuC/104_Sscrofa11.1/sus_scrofa not found
-  
-  
+##
+## 07/05/2024 work on making vep annotation outside of nfcore
+vep --help > vep_help.txt
+RNAvar_nfcore % scp eak37@htc.crc.pitt.edu:/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/variant_calling/vep_help.txt .
+http://www.ensembl.org/info/docs/tools/vep/script/vep_options.html
+
+scp eak37@htc.crc.pitt.edu:/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore/variant_calling/vep_help.txt .
+scp ./CRFK_RNAseq/CRFK_RNAvar_nfcore/Fcat9_RNAvar_nfcore.sh eak37@htc.crc.pitt.edu:/bgfs/rnicholls/Cat_CRFK/GSE124753_CPV/RNAvar-nfcore
+scp ./Sscr_PWS_RNA-Seq/RNAvar_nfcore/Sscr_11v104_VEP.sh eak37@htc.crc.pitt.edu:/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore
+scp ./Sscr_PWS_RNA-Seq/RNAvar_nfcore/Sscr_11v104_VEPinstall.sh eak37@htc.crc.pitt.edu:/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore
+
+
+
 
