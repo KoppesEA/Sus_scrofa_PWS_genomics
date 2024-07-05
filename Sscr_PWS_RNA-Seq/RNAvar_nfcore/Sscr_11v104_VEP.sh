@@ -37,6 +37,8 @@ vep \
       -o $VCFout \
       --everything \
       --species pig \
+	  --cache \
+      --dir_cache $VEP_CACHE \
       --fork 8 \
       --vcf \
       --stats_file $STATSout

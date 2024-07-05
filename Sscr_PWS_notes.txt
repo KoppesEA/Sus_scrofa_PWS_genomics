@@ -256,6 +256,32 @@ scp ./CRFK_RNAseq/CRFK_RNAvar_nfcore/Fcat9_RNAvar_nfcore.sh eak37@htc.crc.pitt.e
 scp ./Sscr_PWS_RNA-Seq/RNAvar_nfcore/Sscr_11v104_VEP.sh eak37@htc.crc.pitt.edu:/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore
 scp ./Sscr_PWS_RNA-Seq/RNAvar_nfcore/Sscr_11v104_VEPinstall.sh eak37@htc.crc.pitt.edu:/bgfs/rnicholls/PWS_Sus_2017/RNAvar-nfcore
 
+[eak37@htc-1024-n0 104_Sscrofa11.1]$ pwd
+/bgfs/rnicholls/REFGenomes/Sscrofa_v11.1_v104/sus_scrofa/104_Sscrofa11.1
+zcat */all_vars.gz > Sscr_11_vep_
+[eak37@htc-1024-n0 104_Sscrofa11.1]$ zcat 1/all_vars.gz | head # even chicking more very little with INFO; may need to re-arrange into vcf-like file
+1	rs1112542035	.	.	112	.	C/T	.	.	.	.	.	.	.	.
+1	rs1112347109	.	.	170	.	G/T	.	.	.	.	.	.	.	.
+1	rs1108162481	.	.	370	.	G/A	.	.	.	.	.	.	.	.
+1	rs1113769090	.	.	376	.	C/T	.	.	.	.	.	.	.	.
+1	rs1112184913	.	.	481	.	T/C	.	.	.	.	.	.	.	.
+1	rs1107705765	.	.	482	.	T/C	.	.	.	.	.	.	.	.
+1	rs1113680398	.	.	555	.	C/G	.	.	.	.	.	.	.	.
+1	rs1109409939	.	.	607	.	T/A	.	.	.	.	.	.	.	.
+1	rs1108283011	.	.	608	.	T/G	.	.	.	.	.	.	.	.
+1	rs1113404032	.	.	609	.	G/C	.	.	.	.	.	.	.	.
 
+[eak37@htc-1024-n0 120-1_subline_1]$ zcat 120-1_subline_1.haplotypecaller.vcf.gz | grep -v "\#" | head
+1	370	.	G	A	56.64	.	AC=1;AF=0.500;AN=2;BaseQRankSum=0.000;DP=5;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=60.00;MQRankSum=0.000;QD=14.16;ReadPosRankSum=0.674;SOR=0.693	GT:AD:DP:GQ:PL	0/1:2,2:4:64:64,0,65
+1	3392	.	G	A	1436.64	.	AC=1;AF=0.500;AN=2;BaseQRankSum=1.546;DP=94;ExcessHet=0.0000;FS=7.548;MLEAC=1;MLEAF=0.500;MQ=60.00;MQRankSum=0.000;QD=16.14;ReadPosRankSum=0.122;SOR=0.249	GT:AD:DP:GQ:PL	0/1:35,54:89:99:1444,0,833
+1	3430	.	C	T	1071.64	.	AC=1;AF=0.500;AN=2;BaseQRankSum=2.887;DP=80;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=60.00;MQRankSum=0.000;QD=14.68;ReadPosRankSum=-1.125;SOR=0.606	GT:AD:DP:GQ:PL	0/1:34,39:73:99:1079,0,807
+1	14234	.	G	A	53.64	.	AC=1;AF=0.500;AN=2;BaseQRankSum=-0.967;DP=3;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=60.00;MQRankSum=0.000;QD=17.88;ReadPosRankSum=-0.967;SOR=0.223	GT:AD:DP:GQ:PL	0/1:1,2:3:29:61,0,29
+1	14596	.	A	G	37.32	.	AC=2;AF=1.00;AN=2;DP=2;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=60.00;QD=18.66;SOR=0.693	GT:AD:DP:GQ:PL	1/1:0,2:2:6:49,6,0
+1	22139	.	A	C	58.64	.	AC=1;AF=0.500;AN=2;BaseQRankSum=0.323;DP=23;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=60.00;MQRankSum=0.000;QD=2.55;ReadPosRankSum=0.046;SOR=0.148	GT:AD:DP:GQ:PL	0/1:20,3:23:66:66,0,824
+1	22141	.	A	C	58.64	.	AC=1;AF=0.500;AN=2;BaseQRankSum=-1.853;DP=23;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=60.00;MQRankSum=0.000;QD=2.55;ReadPosRankSum=-0.384;SOR=0.148	GT:AD:DP:GQ:PL	0/1:20,3:23:66:66,0,824
+1	22143	.	A	T	61.64	.	AC=1;AF=0.500;AN=2;BaseQRankSum=-1.840;DP=22;ExcessHet=0.0000;FS=0.000;MLEAC=1;MLEAF=0.500;MQ=60.00;MQRankSum=0.000;QD=2.80;ReadPosRankSum=-1.186;SOR=0.163	GT:AD:DP:GQ:PL	0/1:19,3:22:69:69,0,789
+1	23784	.	A	G	495.64	.	AC=1;AF=0.500;AN=2;BaseQRankSum=-0.829;DP=26;ExcessHet=0.0000;FS=6.435;MLEAC=1;MLEAF=0.500;MQ=60.00;MQRankSum=0.000;QD=22.53;ReadPosRankSum=-0.640;SOR=3.967	GT:AD:DP:GQ:PL	0/1:5,17:22:85:503,0,85
+1	27393	.	A	G	11407.06	.	AC=2;AF=1.00;AN=2;DP=366;ExcessHet=0.0000;FS=0.000;MLEAC=2;MLEAF=1.00;MQ=60.00;QD=32.78;SOR=1.280	GT:AD:DP:GQ:PL	1/1:0,348:348:99:11421,1037,0
 
-
+#try to use BCF tools to append rs name to vcf?
+https://samtools.github.io/bcftools/bcftools.html#annotate
