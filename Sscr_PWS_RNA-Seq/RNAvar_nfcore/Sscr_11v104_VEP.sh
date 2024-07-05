@@ -36,11 +36,7 @@ vep \
       -i $VCFin \
       -o $VCFout \
       --everything \
-      --assembly Sscrofa11.1 \
-      --species sus_scrofa \
-      --cache \
-      --cache_version 104 \
-      --dir_cache $VEP_CACHE \
+      --species pig \
       --fork 8 \
       --vcf \
       --stats_file $STATSout

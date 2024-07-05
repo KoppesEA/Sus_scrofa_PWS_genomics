@@ -1,0 +1,30 @@
+mkdir: missing operand
+Try 'mkdir --help' for more information.
+
+
+
+Performing VEP annotation
+Possible precedence issue with control flow operator at /ihome/crc/install/vep/python3.7_vep95/lib/site_perl/5.26.2/Bio/DB/IndexedBase.pm line 845.
+
+IMPORTANT INFORMATION:
+
+The VEP can read gene data from either a local cache or local/remote databases.
+
+Using a cache is the fastest and most efficient way to use the VEP. The
+included INSTALL.pl script can be used to fetch and set up cache files from the
+Ensembl FTP server. Simply run "perl INSTALL.pl" and follow the instructions, or
+see the documentation pages listed below.
+
+If you have already set up a cache, use "--cache" or "--offline" to use it.
+
+It is possible to use the public databases hosted at ensembldb.ensembl.org, but
+this is slower than using the cache and concurrent and/or long running VEP jobs
+can put strain on the Ensembl servers, limiting availability to other users.
+
+To enable using databases, add the flag "--database".
+
+Documentation
+Installer: http://www.ensembl.org/info/docs/tools/vep/script/vep_download.html#installer
+Cache: http://www.ensembl.org/info/docs/tools/vep/script/index.html#cache
+
+     at /ihome/crc/install/vep/python3.7_vep95/share/ensembl-vep-95.3-0/modules/Bio/EnsEMBL/VEP/Config.pm line 687.
