@@ -1,4 +1,4 @@
-## GSE139512 Pig (Sus scrofa) scRNA-Seq analysis of oocyte and embryos
+## GSE139512 Pig (Sus scrofa) scRNA-Seq analysis of oocyte and embryos (Kong et al., FASEB, 2019)
 ## Erik Koppes, PhD; University of Pittsburgh
 ## 6/25/2024
 #rm(list=ls())
@@ -75,44 +75,59 @@ series_full <- GSE_139512_meta %>% column_to_rownames(var = "Sample_Name")
 all(rownames(series_full) == colnames(GSE139512_df))  ##all TRUE--goodtogo
 
 # Create Seurat Object
-GSE57249_seurat <- CreateSeuratObject(counts = GSE139512_df, meta.data = series_full)
-
+GSE139512_seurat <- CreateSeuratObject(counts = GSE139512_df, meta.data = series_full)
 # Warning: Feature names cannot have underscores ('_'), replacing with dashes ('-')
 # Warning: Data is of class data.frame. Coercing to dgCMatrix.
 
 # Does not appear to be Mitochondrial Features or Read counts in this gencode annotated trancriptomic data
-GSE57249_seurat[["percent.mt"]] <- PercentageFeatureSet(GSE57249_seurat, pattern = "^MT-1") ## Gencode uses "^MT-" to denote mitochondrial genes
-rownames(GSE57249_seurat)[rownames(GSE139512_df) %>% str_detect("MT-1")] #or possibly just not annotated by gene_name in Sscr 10.2 v87
+GSE139512_seurat[["percent.mt"]] <- PercentageFeatureSet(GSE139512_seurat, pattern = "^M") ## Ensembl uses "^MT-" to denote mitochondrial genes usually but is left of in this .gtf
+rownames(GSE139512_seurat)[rownames(GSE139512_df) %>% str_detect("ND1")]
+##this shows ND1 is present, does not have MT- or M- marking as mitochondrial so will need manual mitogene list extracted from gtf [see awk bash script]
+Sscr_mito_genes <- read_tsv("./Sscr_GTF/Sus_scrofa.mito.Sscrofa10.2.87.tsv", col_names = "Gene_Name")
+Sscr_mito_regex <- paste0("\\b(", paste(Sscr_mito_genes$Gene_Name, collapse = "|"), ")\\b")
+# Sscr_mito_regex # "\\b(ATP6|ATP8|COX1|COX2|COX3|CYTB|ND1|ND2|ND3|ND4|ND4L|ND5|ND6|insdc)\\b" # the \\b: first backslash to escape second, and \b for word boundary
+
+# Use regex to set pattern
+GSE139512_seurat[["percent.mt"]] <- PercentageFeatureSet(GSE139512_seurat, pattern = Sscr_mito_regex)
+
 # character(0)
-head(GSE57249_seurat@meta.data, 10) # unfiltered but <10% in most cases
-summary(GSE57249_seurat@meta.data$percent.mt)
-# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-# 0       0       0       0       0       0
+head(GSE139512_seurat@meta.data, 10) # unfiltered but <10% in most cases
+summary(GSE139512_seurat@meta.data$percent.mt)
+## Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.3954  8.3459 12.1268 12.4466 15.4204 43.5632 
+## mostly OK but some very high mito % should be removed
+head(GSE139512_seurat@meta.data %>% arrange(desc(percent.mt)), 10) # top 10 cells with highest percent.mt, top3 also have nfeature_RNA <10,000
+# ICM-2, 8-cell_1_5 and M-1_1 should be removed due to mt and M_4_15 removed due to low nfeature_RNA and 2-cell_1_2 with high nCountRNA
+# Also want to remove and "pull" samples; these are pooled
+Cells_Remove <- c("CM-2", "8-cell_1_5", "M-1_1", "M_4_15", "2-cell_1_2")
+Cell_Type_Remove <- c("2-Cell-Pool", "4-Cell-Pool", "8-Cell-Pool", "Morula-Pool")
+GSE139512_seurat_filter <- subset(GSE139512_seurat, cells = Cells_Remove, invert = TRUE)
+GSE139512_seurat_filter <- subset(GSE139512_seurat_filter, subset = Cell_Type %in% Cell_Type_Remove, invert = TRUE)
 
 #######################-----------#################
 
 # Visualize QC metrics as a violin plot; at least one zygote should be removed due to low feature and ncounts
-VlnPlot(GSE57249_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
-VlnPlot(GSE57249_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = 'Cell_Type')
+VlnPlot(GSE139512_seurat_filter, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+VlnPlot(GSE139512_seurat_filter, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = 'Cell_Type')
 
 # FeatureScatter plot to see correlation of nFeature and nCount
-FeatureScatter(GSE57249_seurat, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+FeatureScatter(GSE139512_seurat_filter, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 ## perhaps need to remove pull/pool samples or combine into cells
 ##m Extreme outlier in 2-cell_1_2 nCount_RNA
 
 # # Filter bad zygote --to revise filtering here for bad 2-cell
-# GSE57249_seurat@meta.data %>% filter(Cell_Type == "zygote") %>% arrange(desc(nCount_RNA)) #GSM1377865 sample Z7 has abberrantly low nCount and nFeature
-GSE57249_seurat_filter <- subset(GSE57249_seurat, subset = Experiment != "SRX7066509")
+# GSE139512_seurat@meta.data %>% filter(Cell_Type == "zygote") %>% arrange(desc(nCount_RNA)) #GSM1377865 sample Z7 has abberrantly low nCount and nFeature
+GSE139512_seurat_filter <- subset(GSE139512_seurat, subset, Idents %in% c("1-cell","2-Cell", "4-Cell")))
 
-# Idents(GSE57249_seurat)  %>% grepl(pattern = "2-cell")
-# identities <- Idents(GSE57249_seurat)
+# Idents(GSE139512_seurat)  %>% grepl(pattern = "2-cell")
+# identities <- Idents(GSE139512_seurat)
 # identities <- as.character(identities)
 # print(any(identities == "2-cell_1_2"))
 ##easiest just to addback a full label as orig.ident to metadata....
 
 # FeatureScatter plot of filtered to see correlation of nFeature and nCount
-FeatureScatter(GSE57249_seurat_filter, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-subset(GSE57249_seurat_filter, subset, Idents %in% c("1-cell","2-Cell", "4-Cell")) %>%  FeatureScatter(feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+FeatureScatter(GSE139512_seurat_filter, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+subset(GSE139512_seurat_filter, subset, Idents %in% c("1-cell","2-Cell", "4-Cell")) %>%  FeatureScatter(feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 
 # Normalization
 CPB_seurat <- NormalizeData(CPB_seurat, normalization.method = "LogNormalize", scale.factor = 10000) #default norm param
@@ -232,10 +247,10 @@ saveWorkbook(CPB_scRNAseq_markergenes, "CPB_scRNAseq_markergeness.xlsx", overwri
 
 ## Known Maternal Effect genes::
 matEffect <- c("Dnmt1", "Zfp57", "Padi6")
-VlnPlot(GSE57249_seurat, features = matEffect)
+VlnPlot(GSE139512_seurat, features = matEffect)
 ggsave("Biase_matEffect_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
-FeaturePlot(GSE57249_seurat,features  = matEffect)
+FeaturePlot(GSE139512_seurat,features  = matEffect)
 ggsave("Biase_matEffect_feature.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_featurePlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
@@ -243,7 +258,7 @@ ggsave("Biase_matEffect_feature.jpeg", plot = last_plot(), device = "jpeg", path
 ## Ref :: Khdc3l and Nlrp7 missing
 OoCortex<- c("Khdc3l", "Ooep", "Padi6", "Tle6", "Zbed3", "Nlrp2", "Nlrp4f",
              "Nlrp5", "Nlrp9a", "Nlrp9b", "Nlrp9c", "Nlrp7")
-VlnPlot(GSE57249_seurat, features = OoCortex)
+VlnPlot(GSE139512_seurat, features = OoCortex)
 ggsave("Biase_OoCortex_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
@@ -257,7 +272,7 @@ Biase_bivalent <- c("Bbs4", "Nlxt2",
                     "Lgr4",  "Fb",
                     "Cdk1", "Pol2f",
                     "Uch3", "Uch4")
-VlnPlot(GSE57249_seurat, features = Biase_bivalent)
+VlnPlot(GSE139512_seurat, features = Biase_bivalent)
 ggsave("Biase_bivalent_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
@@ -265,16 +280,16 @@ ggsave("Biase_bivalent_violin.jpeg", plot = last_plot(), device = "jpeg", path =
 NupGenes <- c("Nup37", "Nup43","Nup50", "Nup62", "Nup85",  "Nup93", "Nup96",
               "Nup98", "Nup107", "Nup133", "Nup153", "Nup160", "Nup214", "Sec13",
               "Seh1l", "Ahctf1")
-VlnPlot(GSE57249_seurat, features = NupGenes)
+VlnPlot(GSE139512_seurat, features = NupGenes)
 ggsave("Biase_NupGenes_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
-FeaturePlot(GSE57249_seurat,features  = NupGenes)
+FeaturePlot(GSE139512_seurat,features  = NupGenes)
 ggsave("Biase_NupGenes_features.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
 ## Imprint TFs #Zfp274 not found
 imprintTF <- c("Yy1", "Nrf1", "Zfp445", "Zfp274", "Zscan4c", "Zscan4d", "Zscan4f")
-VlnPlot(GSE57249_seurat, features = imprintTF)
+VlnPlot(GSE139512_seurat, features = imprintTF)
 ggsave("Biase_imprintTFs_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
@@ -283,7 +298,7 @@ ggsave("Biase_imprintTFs_violin.jpeg", plot = last_plot(), device = "jpeg", path
 Camilo_of_interest <- c("Pdia3", "Tcl1", "Ooep", "Rras2",
                         "Snrpf", "Dab2", "Cops5", "Sbds",
                         "Pelo", "Cdc73", "Emg1", "Ctnna1")
-VlnPlot(GSE57249_seurat,features  = Camilo_of_interest)
+VlnPlot(GSE139512_seurat,features  = Camilo_of_interest)
 ggsave("Biase_Camillo_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
@@ -292,20 +307,20 @@ DNAmethylation <- c("Dnmt1", "Dnmt3a", "Dnmt3b", "Dnmt3l",
                     "Tet1", "Tet2", "Tet3", "Setdb1",
                     "Uhrf1", "Uhrf2", "Cdca7", "Hells",
                     "Zfp57", "Trim28", "Dmap1", "Zbtb24")
-VlnPlot(GSE57249_seurat,features  = DNAmethylation)
+VlnPlot(GSE139512_seurat,features  = DNAmethylation)
 ggsave("Biase_DNAme_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
 #Ehmt2=G9a 
 HistoneModifiers <- c("Setdb1", "Sin3a", "Lsd1", "Suv39h1", "Ehmt2", "Hdac4", "Hdac6") #tooadd ask MRW
-VlnPlot(GSE57249_seurat,features  = HistoneModifiers)
+VlnPlot(GSE139512_seurat,features  = HistoneModifiers)
 ggsave("Biase_Histone_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
 
 MoreofInterest <- c("Zfp688", "Gadd45a", "Gadd45b",
                     "Stat3", "Sirt1", "Sirt3")
-VlnPlot(GSE57249_seurat,features  = MoreofInterest)
+VlnPlot(GSE139512_seurat,features  = MoreofInterest)
 ggsave("Biase_moreofInterest_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
@@ -319,13 +334,13 @@ Zygote <- c("Zp1", "Zp2", "Zp3", "Padi6", "Ooep", "Dnmt1", "Dnmt3a")
 # Oocyte <- c("Zp1", "Zp2", "Zp3", "Padi6", "Ooep" "Dnmt1", "Dnmt3a")
 
 ## Lineage Marker ViolinPlots
-VlnPlot(GSE57249_seurat,features  = ICM_marker)
+VlnPlot(GSE139512_seurat,features  = ICM_marker)
 ggsave("Biase_ICM_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
-VlnPlot(GSE57249_seurat,features  = TE_marker) #Par3, Cola4, Ecad, GH not found
+VlnPlot(GSE139512_seurat,features  = TE_marker) #Par3, Cola4, Ecad, GH not found
 ggsave("Biase_TE_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
-VlnPlot(GSE57249_seurat,features  = XEN_marker)
+VlnPlot(GSE139512_seurat,features  = XEN_marker)
 ggsave("Biase_XEN_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
@@ -336,16 +351,16 @@ MelList1 <- c("Zfp57", "Padi6", "Birc3", "Eif4e1b",
 MelList2 <- c("Esr2", "Galm", "Uhrf1", "B4galt4",
               "Oas1h", "Pcgf1", "Ralbp1", "Meis2",
               "Nup214", "Txnip", "Akap17b", "Nlrp5")
-VlnPlot(GSE57249_seurat,features  = MelList1)
+VlnPlot(GSE139512_seurat,features  = MelList1)
 ggsave("Biase_Mann1_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
-VlnPlot(GSE57249_seurat,features  = MelList2)
+VlnPlot(GSE139512_seurat,features  = MelList2)
 ggsave("Biase_Mann2_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
 # Jiang 2012 Cell Research; Table S1
 JiZscan4 <- c( "Zscan4f", "Npm1", "Npm2", "Dyrk2", "Kdm1b", "Rad51", "Zar1", "Dppa3", "Ezh2", "Pms2")
-VlnPlot(GSE57249_seurat,features  = JiZscan4)
+VlnPlot(GSE139512_seurat,features  = JiZscan4)
 ggsave("Biase_Zscan4Ji_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
