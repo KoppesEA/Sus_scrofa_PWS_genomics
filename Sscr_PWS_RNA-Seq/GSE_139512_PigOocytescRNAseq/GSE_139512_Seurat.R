@@ -17,46 +17,53 @@ library(ggplot2)
 GSE_139512_SraRunTbl <- read_csv("GSE_139512_SraRunTable.txt")
 
 # Import GSE57249 matrice
-GSE139512_df <- read_tsv("./GSE139512%5Ffpkm.txt") #note row1 is gene names, cols are sample GSE
+GSE139512_df <- read_tsv("./GSE139512%5Ffpkm.txt") #note col1 is gene names, next 91 cols are GSE_139512 sample ; 25414 features
 
 ## Ensembl GTF for Sscrofa 10.2.87
 # set Ensembl Gene IDs to rownames rather than column [see awk/sort commands] (25322 IDs)
-Sscr10.2v87_IDs <- read_tsv("./Sscr_GTF/Sus_scrofa.Sscrofa10.2.87.tsv",
+Sscr10.2v87_IDs <- read_tsv("./Sscr_GTF/Sus_scrofa.Sscrofa10.2.87.geneIDconv.tsv",
                           col_names = c("Ensembl_ID", "Gene_Name"))
 
-# set nonuniq Gene_Names [see sort/uniq commands] (197 genes)
-Sscr10.2v87_nonuniq <- read_tsv("./Sscr_GTF/Sus_scrofa.Sscrofa10.2.87_nonuniq.tsv",
-                              col_names = c("Gene_Name"))
-# remove nonuniq Gene_names that are "Ensembl", "ensembl_havana", "havana" or "insdc" as gene_name not given in v87 GTF (194 genes)
-Sscr10.2v87_nonuniq <- Sscr10.2v87_nonuniq %>% filter(!(Gene_Name %in% c("ensembl", "ensembl_havana", "havana", "insdc")))
+# Find Ensembl TrackingID elements that have nonunique Gene_Name: 1928 total tracking IDs: mostly s7k, snords, U6 etc.
+Sscr10.2v87_nonuniq <- Sscr10.2v87_IDs$Ensembl_ID[duplicated(Sscr10.2v87_IDs$Gene_Name, fromLast = TRUE)]
+Sscr10.2v87_nonuniq_uniq <- unique(Sscr10.2v87_IDs$Gene_Name[duplicated(Sscr10.2v87_IDs$Gene_Name, fromLast = TRUE)]) #includes ZFP57
+Sscr10.2v87_IDs <- Sscr10.2v87_IDs %>% mutate(Gene_Name_adj = if_else(Ensembl_ID %in% Sscr10.2v87_nonuniq, Ensembl_ID, Gene_Name))
 
-# get corresponding Ensembl Ensemble_IDs (4013) that match nonuniq Gene_Names (293); mostly s7k, snords, U6 etc. (2121 IDs)
-Sscr10.2v87_nonuniq_IDs <- Sscr10.2v87_IDs %>% filter(Gene_Name %in% Sscr10.2v87_nonuniq$Gene_Name)
+## Remove 7SK, U snRNAs,   
+remove_genes <- c(paste0("U", c(1:8)), "U6atac", "snoU6-53", "7SK", "Metazoa_SRP", "5_8S_rRNA", "5S_rRNA") #list of 14 Gene_Names
+remove_tracking <- filter(Sscr10.2v87_IDs, Gene_Name %in% remove_genes) # list of 193 tracking IDs
 
-# filter out nonuniq ensembl_IDs from count matrix then join to get Gene_Names 
-GSE139512_df <- GSE139512_df %>% filter(!(tracking_id %in% Sscr10.2v87_nonuniq_IDs$Ensembl_ID)) %>%
-  left_join(Sscr10.2v87_IDs, by = join_by(tracking_id == Ensembl_ID))
+# Join gene_names_adj to GSE139512_df
+GSE139512_df <- GSE139512_df %>% left_join(Sscr10.2v87_IDs, by = join_by(tracking_id == Ensembl_ID)) %>% select(tracking_id, Gene_Name, Gene_Name_adj, everything())
+GSE139512_df %>% filter(Gene_Name == "7SK") #check that repetitive gene features retain tracking_IDs (generally low counts anyway for 7SK)
 
-# make new Gene_annot column to fill in gene_IDs that are "ensembl" etc. with the gene_ID instead
+# 92 additional tracking IDs starting with ERCC-; set Gene_Name_adj to tracking_ID
+GSE139512_df %>% filter(is.na(Gene_Name_adj))
 GSE139512_df <- GSE139512_df %>%
-  mutate(Gene_annot = if_else(Gene_Name %in% c("ensembl", "ensembl_havana", "havana", "insdc") | is.na(Gene_Name), tracking_id, Gene_Name)) %>%
-  select(-tracking_id, -Gene_Name, Gene_annot)
+  mutate(Gene_Name_adj = if_else(str_detect(tracking_id, "^ERCC-\\d{5}$"), tracking_id, Gene_Name_adj))
 
-## No more nonunique Gene_annot found
+# filter out remove_tracking genes (S7K, rRNA etc) nonuniq ensembl_IDs from count matrix then join to get Gene_Names 
+GSE139512_df <- GSE139512_df %>% filter(!(tracking_id %in% remove_tracking$Ensembl_ID)) # down to 23966 observations (genes)
+
+# remove extra columns
+GSE139512_df <- GSE139512_df %>% select(-tracking_id, -Gene_Name)
+
+## No more nonunique Gene_Name_adj found
 # Find nonunique character class values in the 'values' column
 nonunique_values <- GSE139512_df %>%
-  group_by(Gene_annot) %>%
+  group_by(Gene_Name_adj) %>%
   filter(n() > 1) %>%
-  pull(Gene_annot) %>%
+  pull(Gene_Name_adj) %>%
   unique()
+GSE139512_df %>% filter(is.na(Gene_Name_adj))
 
-## and set column Gene_annot to rownames
-GSE139512_df <- column_to_rownames(GSE139512_df, var = "Gene_annot")
+## and set column Gene_Name_adj to rownames
+GSE139512_df <- column_to_rownames(GSE139512_df, var = "Gene_Name_adj")
 
 # Extract metadata from CPB metadata
 source("GSE139512_metaScript.R")
 
-## However it appears that the the Devolpment Stage variable in the meta-data is not the sample name, also there is a 2,4,8 and Morula -cell pull sample (Pools?)
+## However it appears that the the Development Stage variable in the meta-data is not the sample name, also there is a 2,4,8 and Morula -cell pull sample (Pools?)
 ## Make Metadata manuallty
 GSE_139512_meta <- bind_cols(
   Sample_Name = colnames(GSE139512_df),
@@ -79,288 +86,300 @@ GSE139512_seurat <- CreateSeuratObject(counts = GSE139512_df, meta.data = series
 # Warning: Feature names cannot have underscores ('_'), replacing with dashes ('-')
 # Warning: Data is of class data.frame. Coercing to dgCMatrix.
 
+
+
+
+
 # Does not appear to be Mitochondrial Features or Read counts in this gencode annotated trancriptomic data
 GSE139512_seurat[["percent.mt"]] <- PercentageFeatureSet(GSE139512_seurat, pattern = "^M") ## Ensembl uses "^MT-" to denote mitochondrial genes usually but is left of in this .gtf
 rownames(GSE139512_seurat)[rownames(GSE139512_df) %>% str_detect("ND1")]
 ##this shows ND1 is present, does not have MT- or M- marking as mitochondrial so will need manual mitogene list extracted from gtf [see awk bash script]
-Sscr_mito_genes <- read_tsv("./Sscr_GTF/Sus_scrofa.mito.Sscrofa10.2.87.tsv", col_names = "Gene_Name")
+Sscr_mito_genes <- read_tsv("./Sscr_GTF/Sus_scrofa.mito.Sscrofa10.2.87.uniq.tsv", col_names = "Gene_Name")
 Sscr_mito_regex <- paste0("\\b(", paste(Sscr_mito_genes$Gene_Name, collapse = "|"), ")\\b")
-# Sscr_mito_regex # "\\b(ATP6|ATP8|COX1|COX2|COX3|CYTB|ND1|ND2|ND3|ND4|ND4L|ND5|ND6|insdc)\\b" # the \\b: first backslash to escape second, and \b for word boundary
+# Sscr_mito_regex # "\\b(ATP6|ATP8|COX1|COX2|COX3|CYTB|ND1|ND2|ND3|ND4|ND4L|ND5|ND6|...)\\b" # the \\b: first backslash to escape second, and \b for word boundary
 
 # Use regex to set pattern
 GSE139512_seurat[["percent.mt"]] <- PercentageFeatureSet(GSE139512_seurat, pattern = Sscr_mito_regex)
-
-# character(0)
-head(GSE139512_seurat@meta.data, 10) # unfiltered but <10% in most cases
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.5041  8.3736 11.8782 19.0077 17.8335 98.7157 
+head(GSE139512_seurat@meta.data, 10) # check metadata updated
 summary(GSE139512_seurat@meta.data$percent.mt)
 ## Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## 0.3954  8.3459 12.1268 12.4466 15.4204 43.5632 
+## 0.5041  8.3736 11.8782 19.0077 17.8335 98.7157 
 ## mostly OK but some very high mito % should be removed
-head(GSE139512_seurat@meta.data %>% arrange(desc(percent.mt)), 10) # top 10 cells with highest percent.mt, top3 also have nfeature_RNA <10,000
+head(GSE139512_seurat@meta.data %>% arrange(desc(percent.mt)), 25) # top 25 cells with highest percent.mt, top6 have >90% mt reads; top 15 are > 20% mt Reads to remove
+
+# Visualize nFeature, RNA count and percent mt QC metrics as a violin plot; need to remove high percent mt
+VlnPlot(GSE139512_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+VlnPlot(GSE139512_seurat, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = 'Cell_Type')
+
 # ICM-2, 8-cell_1_5 and M-1_1 should be removed due to mt and M_4_15 removed due to low nfeature_RNA and 2-cell_1_2 with high nCountRNA
 # Also want to remove and "pull" samples; these are pooled
-Cells_Remove <- c("CM-2", "8-cell_1_5", "M-1_1", "M_4_15", "2-cell_1_2")
-Cell_Type_Remove <- c("2-Cell-Pool", "4-Cell-Pool", "8-Cell-Pool", "Morula-Pool")
+Cells_Remove <- c("2-cell_1_2", "4-cell-3_2", "1-cell_3", "1-cell_1", "S_Bla-1", "4-cell-2_3", "ICM-2", "8-cell_1_5", "8-cell_2_3", "M-1_1", "4-cell-1_3", "TE-2")
+Cell_Type_Remove <- c("2-Cell-Pool", "4-Cell-Pool", "8-Cell-Pool", "Blast-1cell", "Morula-Pool")
 GSE139512_seurat_filter <- subset(GSE139512_seurat, cells = Cells_Remove, invert = TRUE)
 GSE139512_seurat_filter <- subset(GSE139512_seurat_filter, subset = Cell_Type %in% Cell_Type_Remove, invert = TRUE)
 
-#######################-----------#################
-
-# Visualize QC metrics as a violin plot; at least one zygote should be removed due to low feature and ncounts
+# Visualize nFeature, RNA count and percent mt QC metrics as a violin plot; need to remove high percent mt
 VlnPlot(GSE139512_seurat_filter, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
 VlnPlot(GSE139512_seurat_filter, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, group.by = 'Cell_Type')
 
+#######################-----------#################
+
 # FeatureScatter plot to see correlation of nFeature and nCount
 FeatureScatter(GSE139512_seurat_filter, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-## perhaps need to remove pull/pool samples or combine into cells
-##m Extreme outlier in 2-cell_1_2 nCount_RNA
-
-# # Filter bad zygote --to revise filtering here for bad 2-cell
-# GSE139512_seurat@meta.data %>% filter(Cell_Type == "zygote") %>% arrange(desc(nCount_RNA)) #GSM1377865 sample Z7 has abberrantly low nCount and nFeature
-GSE139512_seurat_filter <- subset(GSE139512_seurat, subset, Idents %in% c("1-cell","2-Cell", "4-Cell")))
-
-# Idents(GSE139512_seurat)  %>% grepl(pattern = "2-cell")
-# identities <- Idents(GSE139512_seurat)
-# identities <- as.character(identities)
-# print(any(identities == "2-cell_1_2"))
-##easiest just to addback a full label as orig.ident to metadata....
-
-# FeatureScatter plot of filtered to see correlation of nFeature and nCount
-FeatureScatter(GSE139512_seurat_filter, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-subset(GSE139512_seurat_filter, subset, Idents %in% c("1-cell","2-Cell", "4-Cell")) %>%  FeatureScatter(feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+## One slight outlier with high Ncount (4-cell-4)
 
 # Normalization
-CPB_seurat <- NormalizeData(CPB_seurat, normalization.method = "LogNormalize", scale.factor = 10000) #default norm param
+GSE139512_seurat_filter <- NormalizeData(GSE139512_seurat_filter, normalization.method = "LogNormalize", scale.factor = 10000) #default norm param
 
 # Find variable features
-CPB_seurat <- FindVariableFeatures(CPB_seurat, selection.method = "vst", nfeatures = 2000)
+GSE139512_seurat_filter <- FindVariableFeatures(GSE139512_seurat_filter, selection.method = "vst", nfeatures = 2000)
 
 # Identify the 10 most highly variable genes
-top10 <- head(VariableFeatures(CPB_seurat), 10)
-top100 <- head(VariableFeatures(CPB_seurat), 100)
+top10 <- head(VariableFeatures(GSE139512_seurat_filter), 10)
+top100 <- head(VariableFeatures(GSE139512_seurat_filter), 100)
 
 # plot variable features with and without labels
-plot1 <- VariableFeaturePlot(CPB_seurat)
+plot1 <- VariableFeaturePlot(GSE139512_seurat_filter)
 plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
 plot1 + plot2
 
 # Scale the data
-all.genes <- rownames(CPB_seurat)
-CPB_seurat <- ScaleData(CPB_seurat, features = all.genes)
+all.genes <- rownames(GSE139512_seurat_filter)
+GSE139512_seurat_filter <- ScaleData(GSE139512_seurat_filter, features = all.genes)
 
 # Run PCA
-CPB_seurat <- RunPCA(CPB_seurat, features = VariableFeatures(object = CPB_seurat))
+GSE139512_seurat_filter <- RunPCA(GSE139512_seurat_filter, features = VariableFeatures(object = GSE139512_seurat_filter))
 
 # Examine and visualize PCA results a few different ways
-print(CPB_seurat[["pca"]], dims = 1:5, nfeatures = 5)
-VizDimLoadings(CPB_seurat, dims = 1:2, reduction = "pca")
-DimPlot(CPB_seurat, reduction = "pca", group.by = 'emstage')
-DimPlot(CPB_seurat, reduction = "pca", group.by = 'mating')
+print(GSE139512_seurat_filter[["pca"]], dims = 1:5, nfeatures = 5)
+VizDimLoadings(GSE139512_seurat_filter, dims = 1:2, reduction = "pca")
+DimPlot(GSE139512_seurat_filter, reduction = "pca", group.by = 'Cell_Type')
 
 # Heatmaps
-DimHeatmap(CPB_seurat, dims = 1, cells = 55, balanced = TRUE) # for PC1 only
-DimHeatmap(CPB_seurat, dims = 1:4, cells = 55, balanced = TRUE)
+DimHeatmap(GSE139512_seurat_filter, dims = 1, cells = 74, balanced = TRUE) # for PC1 only
+DimHeatmap(GSE139512_seurat_filter, dims = 1:4, cells = 74, balanced = TRUE)
 
 #Jackstrawplot
-CPB_seurat <- JackStraw(CPB_seurat, num.replicate = 100)
-CPB_seurat <- ScoreJackStraw(CPB_seurat, dims = 1:20)
-JackStrawPlot(CPB_seurat, dims = 1:20) ## PC1-4 significant, PC5 less so, PC6 more so,
-ElbowPlot(CPB_seurat) ##pivot is on PC4, we know there are 4 cell types: 2C-NAT, 2C-SO, Z-NAT, Z-SO
+GSE139512_seurat_filter <- JackStraw(GSE139512_seurat_filter, num.replicate = 100)
+GSE139512_seurat_filter <- ScoreJackStraw(GSE139512_seurat_filter, dims = 1:20)
+JackStrawPlot(GSE139512_seurat_filter, dims = 1:20) ## PC1-8 significant, and we have 8 known Cell_Type groups
+ElbowPlot(GSE139512_seurat_filter) ##pivot is on PC7, we know there are 8 cell types: Oocyte, 1-cell, 2-cell, 4-cell, 8-cell, Blast-ICM, Blast-TE, Morula, Oocyte
 
 # Cluster the Cells
-# FindNeighbors; dims=10
-CPB_seurat <- FindNeighbors(CPB_seurat, dims = 1:10) #set to 10 dims (see comments above); elbo plot
+# FindNeighbors; dims=8
+GSE139512_seurat_filter <- FindNeighbors(GSE139512_seurat_filter, dims = 1:8) #set to 8 dims (see comments above); elbow plot
 
-# FindClusters; using avoce dims=1:10 and resolution=1.625 correctly predicts the 5 cell types
-CPB_seurat <- FindClusters(CPB_seurat, resolution = 1.375) #1.3 start to see Z_NAT vs Z_SO diff
-head(Idents(CPB_seurat), 100)
+# FindClusters; using avoce dims=1:8 and resolution=1.625 correctly predicts the 5 cell types
+GSE139512_seurat_filter <- FindClusters(GSE139512_seurat_filter, resolution = 3.65) # 4 groups: Oo, 1-cell and 2-cell together; 4 + 8-vell togetherl Morula diverse ICM/TE together; not very good
+head(Idents(GSE139512_seurat_filter), 100)
 
 # If you haven't installed UMAP, you can do so via reticulate::py_install(packages =
 # 'umap-learn')
-CPB_seurat <- RunUMAP(CPB_seurat, dims = 1:10)
+GSE139512_seurat_filter <- RunUMAP(GSE139512_seurat_filter, dims = 1:10)
 # note that you can set `label = TRUE` or use the LabelClusters function to help label
 # individual clusters
-DimPlot(CPB_seurat, reduction = "umap")
+DimPlot(GSE139512_seurat_filter, reduction = "umap")
 
-## quick save, although with <100 cells was quick to run
-saveRDS(CPB_seurat, file = "./CPB_seurat_seurat_v1.rds")
+## To Edit below for tsne with goup.by=Cell_type
+# # note that you can set `label = TRUE` or use the LabelClusters function to help label
+# # UMAP cluster visualization with cluster-defined, known-group and litter labels
+# DimPlot(CPB_seurat_filter, reduction = "umap", group.by = 'ident') + ggtitle("UMAP Plot with cluster-defined em-stage(ZNAT/ZSO/2CNAT/2CSO) labels")
+# DimPlot1 = last_plot()
+# DimPlot(CPB_seurat_filter, reduction = "umap", group.by = 'em_mat') + ggtitle("UMAP Plot with group-known em-stage(ZNAT/ZSO/2CNAT/2CSO) labels")
+# DimPlot2 = last_plot()
+# DimPlot(CPB_seurat_filter, reduction = "umap", group.by = 'litter') + ggtitle("UMAP Plot with group-known mouse litter labels")
+# DimPlot3 = last_plot()
+# 
+# # TSNE cluster visualization with cluster-defined, known-group and litter labels
+# DimPlot(CPB_seurat_filter, reduction = "tsne",  group.by = 'ident') + ggtitle("tSNE Plot with cluster-defined em-stage(ZNAT/ZSO/2CNAT/2CSO) labels")
+# DimPlot4 = last_plot()
+# DimPlot(CPB_seurat_filter, reduction = "tsne",  group.by = 'em_mat') + ggtitle("tSNE Plot with group-known em-stage(ZNAT/ZSO/2CNAT/2CSO) labels")
+# DimPlot5 = last_plot()
+# DimPlot(CPB_seurat_filter, reduction = "tsne", group.by = 'litter') + ggtitle("tSNE Plot with mouse litter labels")
+# DimPlot6 = last_plot()
+# 
+# # Loop through the plots and save each UMAP/TSNE Plot
+# DimPlots <- paste0("DimPlot", c(1:6))
+# DimPath="./CPB_cluster_UMAP_TSNE"
+# DimPlotUMAP_names <- c("CPB_UMAP_clusterident.jpeg", "CPB_UMAP_knowngroup.jpeg", "CPB_UMAP_knownlitter.jpeg",
+#                        "CPB_TSNE_clusterident.jpeg", "CPB_TSNE_knowngroup.jpeg", "CPB_TSNE_knownlitter.jpeg")
+# for (i in 1:length(DimPlots)) {
+#   plot_name = DimPlots[i]
+#   plot = get(plot_name)
+#   ggsave(filename = DimPlotUMAP_names[i], plot = plot, path = DimPath,
+#          device = "jpeg", units = "cm", scale = 1, dpi = 300, quality = 50)
+# }
 
-## rename and re-level Clusters
-new_cluster_IDs <- c("2CSO", "ZNAT", "ZSO", "2CNAT")
-names(new_cluster_IDs) <- levels(CPB_seurat)
-CPB_seurat <- RenameIdents(CPB_seurat, new_cluster_IDs)
+#############################################
+#############################################
+## instead of clusters will use known groups
 
-# Relevel order for violin plots and FindMarkers
-levels(CPB_seurat) <-  c("ZNAT", "ZSO", "2CNAT", "2CSO")
+# Set Idents to metadata embroy-mating 4-level category
+GSE139512_seurat_filter_origID <- SetIdent(GSE139512_seurat_filter, value = GSE139512_seurat_filter@meta.data$Cell_Type)
+# > unique(GSE139512_seurat_filter@meta.data$Cell_Type)
+# [1] "Oocyte"    "1-Cell"    "2-Cell"    "4-Cell"    "8-Cell"    "Morula"    "Blast-ICM" "Blast-TE"  
 
-## Dim plot w/new names  
-DimPlot(CPB_seurat, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend()
-
-## Find markers
-# find  markers of SO vs NAT Zygote
-cluster_ZSO_markers <- FindMarkers(CPB_seurat, ident.1 = "ZSO", ident.2 = "ZNAT", min.pct = 0.25)
-cluster_2CSO_markers <- FindMarkers(CPB_seurat, ident.1 = "2CSO", ident.2 = "2CNAT", min.pct = 0.25)
-
-# find markers of ZNAT (cmpared to 2CNAT) and 2CNAT (compared to ZNAT) for cell lineaege markers; should be reciprocal
-cluster_ZNAT_markers <- FindMarkers(CPB_seurat, ident.1 = "ZNAT", ident.2 = "2CNAT", min.pct = 0.25)
-cluster_2CNAT_markers <- FindMarkers(CPB_seurat, ident.1 = "2CNAT", ident.2 = "ZNAT", min.pct = 0.25)
-
-## Filter each for p_val_adj < 0.05
-cluster_ZSO_markers_padj0.05 <- cluster_ZSO_markers[cluster_ZSO_markers$p_val_adj < .05,]
-cluster_2CSO_markers_padj0.05 <- cluster_2CSO_markers[cluster_2CSO_markers$p_val_adj < .05,]
-cluster_ZNAT_markers_padj0.05 <- cluster_ZNAT_markers[cluster_ZNAT_markers$p_val_adj < .05,]
-cluster_2CNAT_markers_padj0.05 <- cluster_2CNAT_markers[cluster_2CNAT_markers$p_val_adj < .05,]
-
-# find markers for every cluster compared to all remaining cells, report only the positive
+# Find All markers for every cluster compared to all remaining cells, report only the positive
 # Runs for ~2min on M1 macbook
-CPB_seurat_markers <- FindAllMarkers(CPB_seurat, only.pos = TRUE)
+GSE139512_seurat_group_markers <- FindAllMarkers(GSE139512_seurat_filter_origID, only.pos = TRUE)
 
 ## Set a df with top 250 markers from each cluster
-top250_df <- CPB_seurat_markers  %>%
+top250_group_df <- GSE139512_seurat_group_markers  %>%
   group_by(cluster) %>%
   dplyr::filter(avg_log2FC > 1) %>%
   slice_head(n = 250) %>%
   ungroup()
 
-# Filter by cluster
-ZNAT_250 <- top250_df %>% dplyr::filter(cluster == "ZNAT")
-ZSO_250 <- top250_df %>% dplyr::filter(cluster == "ZSO")
-TwoCNAT_250 <- top250_df %>% dplyr::filter(cluster == "2CNAT")
-TwoCSO_250 <- top250_df %>% dplyr::filter(cluster == "2CSO")
+# Filter by cluster; No markers fouhd for Oocyte, One-Cell, Blast-ICM and Blast-TE (too few samples?)
+Oocyte_250 <- top250_group_df %>% dplyr::filter(cluster == "Oocyte") %>% column_to_rownames(var = "gene")
+One_Cell_250 <- top250_group_df %>% dplyr::filter(cluster == "1-Cell") %>% column_to_rownames(var = "gene")
+Two_Cell_250 <- top250_group_df %>% dplyr::filter(cluster == "2-Cell") %>% column_to_rownames(var = "gene")
+Four_Cell_250 <- top250_group_df %>% dplyr::filter(cluster == "4-Cell") %>% column_to_rownames(var = "gene")
+Eight_Cell_250 <- top250_group_df %>% dplyr::filter(cluster == "8-Cell") %>% column_to_rownames(var = "gene")
+Morula_250 <- top250_group_df %>% dplyr::filter(cluster == "Morula") %>% column_to_rownames(var = "gene")
+Blast_ICM_250 <- top250_group_df %>% dplyr::filter(cluster == "Blast-ICM") %>% column_to_rownames(var = "gene")
+Blast_TE_250 <- top250_group_df %>% dplyr::filter(cluster == "Blast-TE") %>% column_to_rownames(var = "gene")
+
 
 #Create Excel Table of Early mammalian cell division lineage markers
 library(openxlsx)
-CPB_scRNAseq_markergenes <- createWorkbook("CPB_scRNAseq_markergenes")
-addWorksheet(CPB_scRNAseq_markergenes, "ZSOvZNAT")
-writeData(CPB_scRNAseq_markergenes, "ZSOvZNAT", cluster_ZSO_markers_padj0.05, rowNames = F, colNames = T)
-addWorksheet(CPB_scRNAseq_markergenes, "2CSOv2CNAT")
-writeData(CPB_scRNAseq_markergenes, "2CSOv2CNAT", cluster_2CSO_markers_padj0.05, rowNames = F, colNames = T)
-addWorksheet(CPB_scRNAseq_markergenes, "ZNATv2CNAT")
-writeData(CPB_scRNAseq_markergenes, "ZNATv2CNAT", cluster_ZNAT_markers_padj0.05, rowNames = F, colNames = T)
-addWorksheet(CPB_scRNAseq_markergenes, "2CNATvZNAT")
-writeData(CPB_scRNAseq_markergenes, "2CNATvZNAT", cluster_2CNAT_markers_padj0.05, rowNames = F, colNames = T)
-## to add cluster vs all top 250 lists
-addWorksheet(CPB_scRNAseq_markergenes, "TE")
-writeData(CPB_scRNAseq_markergenes, "TE", TE_df, rowNames = F, colNames = T)
-saveWorkbook(CPB_scRNAseq_markergenes, "CPB_scRNAseq_markergeness.xlsx", overwrite = T)
+GSE139512_scRNAseq_markergenes <- createWorkbook("GSE139512_scRNAseq_markergenes")
+addWorksheet(GSE139512_scRNAseq_markergenes, "Oocyte")
+writeData(GSE139512_scRNAseq_markergenes, "Oocyte", Oocyte_250, rowNames = T, colNames = T)
+addWorksheet(GSE139512_scRNAseq_markergenes, "One_Cell")
+writeData(GSE139512_scRNAseq_markergenes, "One_Cell", One_Cell_250, rowNames = T, colNames = T)
+addWorksheet(GSE139512_scRNAseq_markergenes, "Two_Cell")
+writeData(GSE139512_scRNAseq_markergenes, "Two_Cell", Two_Cell_250, rowNames = T, colNames = T)
+addWorksheet(GSE139512_scRNAseq_markergenes, "Four_Cell")
+writeData(GSE139512_scRNAseq_markergenes, "Four_Cell", Four_Cell_250, rowNames = T, colNames = T)
+addWorksheet(GSE139512_scRNAseq_markergenes, "Eight_Cell")
+writeData(GSE139512_scRNAseq_markergenes, "Eight_Cell", Eight_Cell_250, rowNames = T, colNames = T)
+addWorksheet(GSE139512_scRNAseq_markergenes, "Morula")
+writeData(GSE139512_scRNAseq_markergenes, "Morula", Morula_250, rowNames = T, colNames = T)
+addWorksheet(GSE139512_scRNAseq_markergenes, "Blast_ICM")
+writeData(GSE139512_scRNAseq_markergenes, "Blast_ICM", Blast_ICM_250, rowNames = T, colNames = T)
+addWorksheet(GSE139512_scRNAseq_markergenes, "Blast_TE")
+writeData(GSE139512_scRNAseq_markergenes, "Blast_TE", Blast_TE_250, rowNames = T, colNames = T)
+saveWorkbook(GSE139512_scRNAseq_markergenes, "GSE139512_scRNAseq_markergenes.xlsx", overwrite = T)
 
+
+#######################################
+##Adding graphs for known groups
 
 ## Known Maternal Effect genes::
-matEffect <- c("Dnmt1", "Zfp57", "Padi6")
-VlnPlot(GSE139512_seurat, features = matEffect)
-ggsave("Biase_matEffect_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
+matEffect <- c("DNMT1", "ZFP57", "PADI6")
+VlnPlot(GSE139512_seurat_filter_origID, features = matEffect)
+ggsave("CPB_matEffect_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
-FeaturePlot(GSE139512_seurat,features  = matEffect)
-ggsave("Biase_matEffect_feature.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_featurePlots", units = "cm",
-       scale=1, dpi=300, quality=50)
-
-
-## Ref :: Khdc3l and Nlrp7 missing
-OoCortex<- c("Khdc3l", "Ooep", "Padi6", "Tle6", "Zbed3", "Nlrp2", "Nlrp4f",
-             "Nlrp5", "Nlrp9a", "Nlrp9b", "Nlrp9c", "Nlrp7")
-VlnPlot(GSE139512_seurat, features = OoCortex)
-ggsave("Biase_OoCortex_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
+FeaturePlot(GSE139512_seurat_filter_origID,features  = matEffect)
+ggsave("CPB_matEffect_feature.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_featurePlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
-
-## Ref   [Nlxt2, Fb, Pol2f, Uch3, Uch4 not found mm9]
-Biase_bivalent <- c("Bbs4", "Nlxt2",
-                    "Pdlim7", "Scamp4",
-                    "Tcf3","Bhmt2",
-                    "Trp53","Zfp951",
-                    "Aspm", "Parp12",
-                    "Lgr4",  "Fb",
-                    "Cdk1", "Pol2f",
-                    "Uch3", "Uch4")
-VlnPlot(GSE139512_seurat, features = Biase_bivalent)
-ggsave("Biase_bivalent_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
-       scale=1, dpi=300, quality=50)
-
-## Nup genes; Elys=Ahctf1; 
-NupGenes <- c("Nup37", "Nup43","Nup50", "Nup62", "Nup85",  "Nup93", "Nup96",
-              "Nup98", "Nup107", "Nup133", "Nup153", "Nup160", "Nup214", "Sec13",
-              "Seh1l", "Ahctf1")
-VlnPlot(GSE139512_seurat, features = NupGenes)
-ggsave("Biase_NupGenes_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
-       scale=1, dpi=300, quality=50)
-FeaturePlot(GSE139512_seurat,features  = NupGenes)
-ggsave("Biase_NupGenes_features.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
-       scale=1, dpi=300, quality=50)
-
-## Imprint TFs #Zfp274 not found
-imprintTF <- c("Yy1", "Nrf1", "Zfp445", "Zfp274", "Zscan4c", "Zscan4d", "Zscan4f")
-VlnPlot(GSE139512_seurat, features = imprintTF)
-ggsave("Biase_imprintTFs_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
-       scale=1, dpi=300, quality=50)
-
-#Tcl1a=Tcl1
-## The following requested variables were not found: Dab2, Cdc73 [##check with reference build and GTF gene name]
-Camilo_of_interest <- c("Pdia3", "Tcl1", "Ooep", "Rras2",
-                        "Snrpf", "Dab2", "Cops5", "Sbds",
-                        "Pelo", "Cdc73", "Emg1", "Ctnna1")
-VlnPlot(GSE139512_seurat,features  = Camilo_of_interest)
-ggsave("Biase_Camillo_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
-       scale=1, dpi=300, quality=50)
-
-## DNA Methylation
-DNAmethylation <- c("Dnmt1", "Dnmt3a", "Dnmt3b", "Dnmt3l",
-                    "Tet1", "Tet2", "Tet3", "Setdb1",
-                    "Uhrf1", "Uhrf2", "Cdca7", "Hells",
-                    "Zfp57", "Trim28", "Dmap1", "Zbtb24")
-VlnPlot(GSE139512_seurat,features  = DNAmethylation)
-ggsave("Biase_DNAme_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
-       scale=1, dpi=300, quality=50)
-
-#Ehmt2=G9a 
-HistoneModifiers <- c("Setdb1", "Sin3a", "Lsd1", "Suv39h1", "Ehmt2", "Hdac4", "Hdac6") #tooadd ask MRW
-VlnPlot(GSE139512_seurat,features  = HistoneModifiers)
-ggsave("Biase_Histone_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
+## Ref :: KHDC3L, NLRP2, NLRP4F, NLRP9A, NLRP9B, NLRP9C, NLRP7 not found
+OoCortex<- c("KHDC3L", "OOEP", "PADI6", "TLE6", "ZBED3", "NLRP2", "NLRP4F",
+             "NLRP5", "NLRP9A", "NLRP9B", "NLRP9C", "NLRP7")
+VlnPlot(GSE139512_seurat_filter_origID, features = OoCortex)
+ggsave("CPB_matEffect_OoCortex_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
 
-MoreofInterest <- c("Zfp688", "Gadd45a", "Gadd45b",
-                    "Stat3", "Sirt1", "Sirt3")
-VlnPlot(GSE139512_seurat,features  = MoreofInterest)
-ggsave("Biase_moreofInterest_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
+## Ref   [Nlxt2, Fb, Pol2f, Uch3, Uch4 not found mm39]
+Biase_bivalent <- c("BBS4", "NLXT2",
+                    "PDLIM7", "SCAMP4",
+                    "TCF3","BHMT22",
+                    "TRP53","ZFP951",
+                    "ASPM", "PARP12",
+                    "LGR4",  "FB",
+                    "CDK1", "POL2F",
+                    "UCH3", "UCH4")
+VlnPlot(GSE139512_seurat_filter_origID, features = Biase_bivalent)
+ggsave("CPB_bivalent_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
+## Nup genes; Elys=Ahctf1; ; NUP37, NUP50, NUP96, NUP107, NUP160, SEC13 not found
+NupGenes <- c("NUP37", "NUP43", "NUP50", "NUP62", "NUP85", "NUP93", "NUP96", "NUP98", "NUP107", 
+              "NUP133", "NUP153", "NUP160", "NUP214", "SEC13", "SEH1L", "AHCTF1")
+VlnPlot(GSE139512_seurat_filter_origID, features = NupGenes)
+ggsave("CPB_NupGenes_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
+       scale=1, dpi=300, quality=50)
+FeaturePlot(GSE139512_seurat_filter_origID,features  = NupGenes)
+ggsave("CPB_NupGenes_features.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_featurePlots", units = "cm",
+       scale=1, dpi=300, quality=50)
+
+## Imprint TFs; Only ZSCAN4 found
+imprintTF <- c("YY1", "NRF1", "ZSCAN4", "ZFP445", "ZFP274", "ZSCAN4C", "ZSCAN4D", "ZSCAN4F")
+VlnPlot(GSE139512_seurat_filter_origID, features = imprintTF)
+ggsave("CPB_imprintTFs_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
+       scale=1, dpi=300, quality=50)
+
+## Zscan4 isoforms
+Zscan4_isoforms <- GRCm39gencode_IDs %>% filter(grepl("Zscan4", Gene_Name)) %>% pull(Gene_Name)
+VlnPlot(GSE139512_seurat_filter_origID, features = Zscan4_isoforms)
+ggsave("CPB_Zscan4_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
+       scale=1, dpi=300, quality=50)
+
+## DNA Methylation; DNMT3L, TET1, UHRF2, TRIM28
+DNAmethylation <- c("DNMT1", "DNMT3A", "DNMT3B", "DNMT3L",
+                    "TET1", "TET2", "TET3", "SETDB1",
+                    "UHRF1", "UHRF2", "CDCA7", "HELLS",
+                    "ZFP57", "TRIM28", "DMAP1", "ZBTB24")
+VlnPlot(GSE139512_seurat_filter_origID, features  = DNAmethylation)
+ggsave("CPB_DNAme_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
+       scale=1, dpi=300, quality=50)
+
+#Ehmt2=G9a  #Ls1 not found
+HistoneModifiers <- c("SETDB1", "SIN3A", "LSD1", "SUV39H1", "EHMT2", "HDAC4", "HDAC6")
+VlnPlot(GSE139512_seurat_filter_origID, features  = HistoneModifiers)
+ggsave("CPB_Histone_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
+       scale=1, dpi=300, quality=50)
+
+MoreofInterest <- c("ZFP688", "GADD45A", "GADD45B",
+                    "STAT3", "SIRT1", "SIRT3")
+VlnPlot(GSE139512_seurat_filter_origID, features  = MoreofInterest)
+ggsave("CPB_moreofInterest_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
+       scale=1, dpi=300, quality=50)
 
 # Lineage Marker Definitions:: 
-ICM_marker <- c("Pou5f1", "Nanog", "Carm1", "Klf4", "Otx2", "Stat3", "Nr5a2", "Tdgf1") #Oct4=Pou5f1 ZGA <-
-TE_marker <- c("Cdx2", "Eomes", "Sox2", "Gata3", "Par3", "Pard6b", "Elf5", "Krt7", #Par3, Cola4, E-cadherin, cGH, Dab2 not found; Igc2 removed
-               "Krt8", "Cola4", "Cdh1", "Ecad", "GH", "Tead4", "Tfeb", "Itgb5")
-XEN_marker <- c("Gata6", "Gata4", "Ins1", "Ins2", "Igf2r", "Mest")
-Zygote <- c("Zp1", "Zp2", "Zp3", "Padi6", "Ooep", "Dnmt1", "Dnmt3a")
-# Oocyte <- c("Zp1", "Zp2", "Zp3", "Padi6", "Ooep" "Dnmt1", "Dnmt3a")
+ICM_marker <- c("POU5F1", "NANOG", "CARM1", "KLF4", "OTX2", "STAT3", "NR5A2", "TDGF1")
+TE_marker <- c("CDX2", "EOMES", "SOX2", "GATA3", "PAR3", "PARD6B", "ELF5", "KRT7",
+               "KRT8", "COLA4", "CDH1", "ECAD", "GH", "TEAD4", "TFEB", "ITGB5")
+XEN_marker <- c("GATA6", "GATA4", "INS", "IGF2R", "MEST")
+Zygote <- c("ZP1", "ZP2", "ZP3", "PADI6", "OOEP", "DNMT1", "DNMT3A")
+Oocyte <- c("ZP1", "ZP2", "ZP3", "PADI6", "OOEP", "DNMT1", "DNMT3A")
 
 ## Lineage Marker ViolinPlots
-VlnPlot(GSE139512_seurat,features  = ICM_marker)
-ggsave("Biase_ICM_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
+VlnPlot(GSE139512_seurat_filter_origID,features  = ICM_marker)
+ggsave("CPB_ICM_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
-VlnPlot(GSE139512_seurat,features  = TE_marker) #Par3, Cola4, Ecad, GH not found
-ggsave("Biase_TE_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
+VlnPlot(GSE139512_seurat_filter_origID,features  = TE_marker) #Par3, Cola4, Ecad, GH not found
+ggsave("CPB_TE_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
-VlnPlot(GSE139512_seurat,features  = XEN_marker)
-ggsave("Biase_XEN_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
+VlnPlot(GSE139512_seurat_filter_origID,features  = XEN_marker)
+ggsave("CPB_XEN_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
+VlnPlot(GSE139512_seurat_filter_origID,features  = Zygote) #Zp1 not found
+VlnPlot(GSE139512_seurat_filter_origID,features  = Oocyte) #Zp1 not found; same as Zygote
 
 ## Mellissa List from R01
-MelList1 <- c("Zfp57", "Padi6", "Birc3", "Eif4e1b",
-              "Rspo2", "Gja4", "Bmp15", "Mllt3",
-              "Daglb", "Htra4", "Phc1", "Npm2")
-MelList2 <- c("Esr2", "Galm", "Uhrf1", "B4galt4",
-              "Oas1h", "Pcgf1", "Ralbp1", "Meis2",
-              "Nup214", "Txnip", "Akap17b", "Nlrp5")
-VlnPlot(GSE139512_seurat,features  = MelList1)
-ggsave("Biase_Mann1_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
+MelList1 <- c("ZFP57", "PADI6", "BIRC3", "EIF4E1B",
+              "RSPO2", "GJA4", "BMP15", "MLLT3",
+              "DAGLB", "HTRA4", "PHC1", "NPM2")
+MelList2 <- c("ESR2", "GALM", "UHRF1", "B4GALT4",
+              "OAS1H", "PCGF1", "RALBP1", "MEIS2",
+              "NUP214", "TXNIP", "AKAP17B", "NLRP5")
+
+VlnPlot(GSE139512_seurat_filter_origID,features  = MelList1)
+ggsave("CPB_Mann1_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
-VlnPlot(GSE139512_seurat,features  = MelList2)
-ggsave("Biase_Mann2_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
+VlnPlot(GSE139512_seurat_filter_origID,features  = MelList2)
+ggsave("CPB_Mann2_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./CPB_group_violinPlots", units = "cm",
        scale=1, dpi=300, quality=50)
 
-# Jiang 2012 Cell Research; Table S1
-JiZscan4 <- c( "Zscan4f", "Npm1", "Npm2", "Dyrk2", "Kdm1b", "Rad51", "Zar1", "Dppa3", "Ezh2", "Pms2")
-VlnPlot(GSE139512_seurat,features  = JiZscan4)
-ggsave("Biase_Zscan4Ji_violin.jpeg", plot = last_plot(), device = "jpeg", path = "./Biase_scRNAseq_violinPlots", units = "cm",
-       scale=1, dpi=300, quality=50)
+#################### PWS genes ####################
+PWS_genes <- read_tsv("./Sscr_GTF/Ssus_PWS_Ensembl_geneIDs.tsv", col_names = "PWS_Gene")
+VlnPlot(GSE139512_seurat_filter_origID,features  = PWS_genes$PWS_Gene) #ENSSSCG00000018361, ENSSSCG00000027296 not found; expression detected only in UBE3A, MKRN3, SNRPN, ENSSSCG00000004834, ENSSSCG00000026997
+# ENSSSCG00000004834 + ENSSSCG00000026997 == Ndn or pseuedogenes near Mkrn3/Magel2 chr1
+#
